@@ -5,6 +5,13 @@ html,body {
   font-size: 14px;
   height: 100%;
 }
+
+.testing{
+  background: url('/assets/images/ic_notification.png');
+  background: url('/assets/images/ic_home.png');
+  background: url('/assets/images/user.png');
+}
+
 .login-bg {
   background: url('/assets/images/login-bg.jpg') no-repeat 0px 0px;
   width: 100%;
