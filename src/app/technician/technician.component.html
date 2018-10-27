@@ -1,0 +1,234 @@
+<app-layout>
+
+
+    <div id="exTab1" class="container">
+
+        <!-- ************************************************************* -->
+
+        <div>
+            <ul class="nav nav-pills">
+                <li class="active">
+                    <a href="#inProgress" id="btnInProgress" data-toggle="tab">In - Progress</a>
+                </li>
+                <li>
+                    <a href="#reports" id="btnReport" data-toggle="tab">Reports</a>
+                </li>
+            </ul>
+
+          
+            <div class="tab-content ">
+                <div class="tab-pane padding active" id="inProgress">
+                    <filter-textbox (changed)="filterChanged($event)"></filter-textbox>
+                    <br>
+
+                    <ul class="menu-sub-tab">
+                        <li id="pending" class="menu-sub-active">
+                            <a (click)="Pending()">Pending</a>
+                        </li>
+                        <li id="ongoing">
+                            <a (click)="onGoing()">On-Going</a>
+                        </li>
+                    </ul>
+                    <div *ngIf="pending && !ongoing" style="overflow-x:auto;">
+                        <div style="overflow-x:auto;">
+                            <table style="width:100%">
+                                    <tr>                                            
+                                            <th sortBy="containerNumber" (sorted)="sort($event)">Container Number
+                                                <span [hidden]="!(sortType == 'containerNumber' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'containerNumber' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="naviera" (sorted)="sort($event)">Carrier
+                                                <span [hidden]="!(sortType == 'naviera' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'naviera' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="referType" (sorted)="sort($event)">Reefer Type
+                                                <span [hidden]="!(sortType == 'referType' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'referType' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="malfunction" (sorted)="sort($event)">Malfunction
+                                                <span [hidden]="!(sortType == 'malfunction' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'malfunction' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="portTerminal" (sorted)="sort($event)">Port Terminal
+                                                <span [hidden]="!(sortType == 'portTerminal' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'portTerminal' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="requestDate" (sorted)="sort($event)">Request Date
+                                                <span [hidden]="!(sortType == 'requestDate' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'requestDate' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="requestTime" (sorted)="sort($event)">Request Time
+                                                <span [hidden]="!(sortType == 'requestTime' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'requestTime' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="vesselIn" (sorted)="sort($event)">Vessel In
+                                                <span [hidden]="!(sortType == 'vesselIn' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'vesselIn' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="vesselOut" (sorted)="sort($event)">Vessel Out
+                                                <span [hidden]="!(sortType == 'vesselOut' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'vesselOut' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="portOfLoading" (sorted)="sort($event)">Port of loading
+                                                <span [hidden]="!(sortType == 'portOfLoading' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'portOfLoading' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="technician" (sorted)="sort($event)">Technician
+                                                <span [hidden]="!(sortType == 'technician' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'technician' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th>Created By</th>
+                                            <th sortBy="createdOn" (sorted)="sort($event)">Created On
+                                                <span [hidden]="!(sortType == 'createdOn' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'createdOn' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th>Mode</th>                                            
+                                        </tr>
+                                <tr *ngFor="let o of filteredOrders">
+                                    <td>{{o.containerNumber}}</td>
+                                    <td>{{o.naviera}}</td>
+                                    <td>{{o.referType}}</td>
+                                    <td>{{o.malfunction}}</td>
+                                    <td>{{o.portTerminal}}</td>
+                                    <td>{{o.requestDate.day}}/{{o.requestDate.month}}/{{o.requestDate.year}}</td>
+                                    <td>{{o.requestTime.hour}}:{{o.requestTime.minute}}</td>
+                                    <td>{{o.vesselIn}}</td>
+                                    <td>{{o.vesselOut}}</td>
+                                    <td>{{o.portOfLoading}}</td>
+                                    <td>{{o.technician}}</td>
+                                    <td>Admin</td>
+                                    <td>{{o.createdOn | date:'MMM d, y h:mm'}}</td>
+                                    <td>Email</td>
+                                </tr>
+
+                            </table>
+                        </div>
+                        <br>
+
+                    </div>
+
+                    <div *ngIf="ongoing && !pending">
+                        <div style="overflow-x:auto;">
+                            <table class="table table-hover" style="width:100%">
+                                    <tr>                                            
+                                            <th sortBy="containerNumber" (sorted)="sort($event)">Container Number
+                                                <span [hidden]="!(sortType == 'containerNumber' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'containerNumber' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="naviera" (sorted)="sort($event)">Port terminal
+                                                <span [hidden]="!(sortType == 'naviera' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'naviera' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <!-- <th>Mode of creation</th>
+                                        <th>Created by</th> -->
+                                            <th sortBy="requestDate" (sorted)="sort($event)">Request date
+                                                <span [hidden]="!(sortType == 'requestDate' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'requestDate' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="requestTime" (sorted)="sort($event)">Request time
+                                                <span [hidden]="!(sortType == 'requestTime' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'requestTime' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th sortBy="technician" (sorted)="sort($event)">Technician
+                                                <span [hidden]="!(sortType == 'technician' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'technician' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                            <th>Accepted</th>
+                                            <th>Finished</th>
+                                            <th>Repair Date</th>
+                                            <th>Repair Time</th>
+                                            <th>Status</th>
+                                            <th>Type of monitoring</th>
+                                            <th>Pictures Required</th>
+                                            <th>Spare parts needed</th>
+                                            <th>Remarks(1)</th>
+                                            <th>Remarks(2)</th>
+    
+    
+                                        </tr>
+                                <tr *ngFor="let m of monitoringData">
+                                    <td>{{m.containerNumber}}</td>
+                                    <td>{{m.naviera}}</td>
+                                    <!-- <td>Email</td>
+                                    <td>Admin</td> -->
+                                    <td>{{m.requestDate.day}}/{{m.requestDate.month}}/{{m.requestDate.year}}</td>
+                                    <td>{{m.requestTime.hour}}:{{m.requestTime.minute}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+
+                            </table>
+                        </div>
+                        <br>
+
+                    </div>
+
+
+                </div>
+
+                <div class="tab-pane padding" id="reports">
+                    <div style="overflow-x:auto;">
+                        <table class="table table-hover" style="width:100%">
+                            <tr>
+                                <th>Container Number</th>
+                                <th>Port terminal</th>
+                                <th>Mode of creation</th>
+                                <th>Created by</th>
+                                <th>Request date</th>
+                                <th>Request time</th>
+                                <th>Technician</th>
+                                <th>Accepted</th>
+                                <th>Finished</th>
+                                <th>Repair Date</th>
+                                <th>Repair Time</th>
+                                <th>Status</th>
+                                <th>Type of monitoring</th>
+                                <th>Pictures Required</th>
+                                <th>Spare parts needed</th>
+                                <th>Remarks(1)</th>
+                                <th>Remarks(2)</th>
+
+
+                            </tr>
+                            <tr *ngFor="let m of monitoring">
+                                <td>{{m.containerNumber}}</td>
+                                <td>{{m.naviera}}</td>
+                                <td>Email</td>
+                                <td>Admin</td>
+                                <td>{{m.requestDate.day}}/{{m.requestDate.month}}/{{m.requestDate.year}}</td>
+                                <td>{{m.requestTime.hour}}:{{m.requestTime.minute}}</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+
+                        </table>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+</app-layout>

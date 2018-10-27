@@ -1,0 +1,35 @@
+<div class="login-bg">
+    <div class="row">
+        <div class="col-md-3 col-centered">
+           
+            <form [formGroup]="loginForm" class="frm-login" (submit)=loginUser($event) novalidate>
+                <div class="logo text-center">
+                    <h4>Harbour</h4>
+                </div>
+                <h2 class="text-center">Sign in</h2>
+                <p class="sub-heading text-center">Hi there... Start managing your services</p>
+                <div class="form-group">
+                    <label for="form-label">Username</label>
+                    <input type="username" name="username" formControlName="username" class="form-control" id="textUser" >
+                    <div class="alert alert-danger" [hidden]="loginForm.controls.username.untouched || loginForm.controls.username.valid">
+                            A valid username is required
+                        </div>
+                </div>
+                <div class="form-group">
+                        <label for="form-label">Password</label>
+                        <input type="password" name="password" formControlName="password" class="form-control" id="txtPwd">
+                        <div class="alert alert-danger" [hidden]="loginForm.controls.password.untouched || loginForm.controls.password.valid">
+                                Password is required
+                            </div>
+                        
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="login-btn" [disabled]="!loginForm.valid"> Login</button>
+                </div>
+                <div class="alert alert-danger text-center" *ngIf = "error">
+                        Invalid user name or password
+                    </div>
+            </form>
+         </div>
+    </div>
+</div>

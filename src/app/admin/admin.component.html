@@ -1,0 +1,651 @@
+<app-layout>
+
+
+    <div id="exTab1" class="container">
+        <div class="row" *ngIf="!createContainer1">
+            <div class=" input-group-btn" style="margin-left: 77%">
+                <span>
+                    <button class="btn" (click)="createContainer()">Create / View Container Cases</button>
+                </span>
+            </div>
+
+            <div class="col-md-12">
+                <br>
+                <div class="col-md-5">
+                    <div class="">
+                        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                            [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-2"></div>
+
+                <div class="col-md-5">
+
+                    <div class="">
+                        <canvas baseChart [datasets]="barChartData1" [labels]="barChartLabels1" [options]="barChartOptions" [legend]="barChartLegend"
+                            [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+
+                <!-- ======================== -->
+
+
+
+                <div class="col-md-5">
+                    <div class="">
+                        <canvas baseChart [chartType]="'line'" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="chartOptions" [legend]="true"
+                            [colors]="lineColors" (chartClick)="onChartClick($event)">
+                        </canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-2"></div>
+
+                <div class="col-md-5">
+                    <div class="">
+                        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
+                            (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+
+
+        </div>
+
+
+
+        <!-- ************************************************************* -->
+
+
+
+        <div *ngIf="createContainer1">
+            <ul class="nav nav-pills">
+                <li class="active">
+                    <a (click)="displayNew()" id="btnNew" data-toggle="tab">New</a>
+                    <!-- href="#new" -->
+                </li>
+                <li>
+                    <a (click)="displayInProgress()" id="btnInProgress" data-toggle="tab">In - Progress</a>
+                </li>
+                <li>
+                    <a (click)="displayReports()" id="btnReport" data-toggle="tab">Reports</a>
+                </li>
+            </ul>
+            <!-- <div class="btn-container" style="float: right!important;">
+                <button class="btn">Create New Container Cases</button>
+                <button class="btn">Process Existing Containers</button>
+            </div> -->
+
+            <!--  <div class="btn-container" style="float: right!important;">
+                <button class="btn" (click)="ngOnInit()">Refresh</button>
+            </div> -->
+
+            <div class="tab-content ">
+
+
+                <div class="tab-pane padding active" *ngIf="showNew">
+                    <form id="formNewOrder" class="form-horizontal" [formGroup]="orderDataForm" (ngSubmit)="addNewContainer(orderDataForm.value)">
+
+                        <div class="form-group">
+                            <!--left Column-->
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="col-md-4">Container Number</label>
+                                    <div class="col-md-8">                                        
+                                        <input class="form-control" type="text" formControlName="containerNumber" required>
+                                        <div class="alert alert-danger text-center" *ngIf="orderDataForm.controls.containerNumber.invalid && orderDataForm.controls.containerNumber.touched">
+                                            Should comprise of 4 alphabets followed by 7 digits. eg:ASWD3213456
+                                        </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-md-4">Naviera</label>
+                                        <div class="col-md-8">                                            
+                                            <select class="form-control" formControlName="navieraSelected" required>
+                                                <option *ngFor="let n of naviera">{{n}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-md-4">Reefer Type</label>
+                                        <div class="col-md-8">                                            
+                                            <select class="form-control" formControlName="referSelected" required>
+                                                <option *ngFor="let r of referType">{{r}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-md-4">Request Date</label>
+                                        <div class="col-md-8 ">
+                                            <div class='input-group date'>
+                                                <input class="form-control" placeholder="yyyy-mm-dd" formControlName="requestDate" ngbDatepicker #d1="ngbDatepicker">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-md-4">Request Time</label>
+                                        <div class="col-md-8">
+                                            <form [formGroup]="requestTimeForm">
+                                                <ngb-timepicker formControlName="reqTime" [spinners]="false"></ngb-timepicker>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-md-4">Malfunction</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control" formControlName="malfunctionSelected" required>
+                                                <option *ngFor="let m of malfunctions">{{m}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--Right Column-->
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-md-4">Port Terminal</label>
+                                        <div class="col-md-8">
+                                            <select class="form-control" formControlName="portTerminalSelected" required>
+                                                <option *ngFor="let p of portTerminal">{{p}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-md-4">Vessel In</label>
+                                        <div class="col-md-8">
+                                             <input class="form-control" type="text" formControlName="vesselIn" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-md-4">Vessel Out</label>
+                                        <div class="col-md-8">
+                                             <input class="form-control" type="text" formControlName="vesselOut" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-md-4">Port Of Loading</label>
+                                        <div class="col-md-8">
+                                             <input class="form-control" type="text" formControlName="portOfLoading" required>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="col-md-4">Technician</label>
+                                        <div class="col-md-8">                                            
+                                            <select class="form-control" formControlName="technicianSelected" required>
+                                                <option *ngFor="let t of technicians">{{t}}</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <button style="margin-left: 34%;" class="btn btn-submit" type="submit" id="newEntry" [disabled]="!orderDataForm.valid">
+                                    CREATE CONTAINER</button>
+
+                            </div>
+
+                            <div class="alert alert-success text-center" *ngIf="isAdded">
+                                Container request has been created successfully. Please check the status at In-Progress tab.
+
+                            </div>
+                    </form>
+                    </div>
+
+
+                    <div class="tab-pane padding active" *ngIf="showInProgress">
+                        <filter-textbox (changed)="filterChanged($event)"></filter-textbox>
+                        <br>
+
+                        <ul class="menu-sub-tab">
+                            <li id="pending" class="menu-sub-active">
+                                <a (click)="Pending()">Pending</a>
+                            </li>
+                            <li id="ongoing">
+                                <a (click)="onGoing()">On-Going</a>
+                            </li>
+                            <li id="monitoring">
+                                <a>Monitoring</a>
+                            </li>
+                        </ul>
+                        <div *ngIf="pending">
+                            <div style="overflow-x:auto;">
+                                <table style="width:100%" class="table table-striped table-hover">
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" name="checkAll" value="check1">
+                                        </th>
+                                        <th sortBy="containerNumber" (sorted)="sort($event)">Container Number
+                                            <span [hidden]="!(sortType == 'containerNumber' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'containerNumber' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="naviera" (sorted)="sort($event)">Carrier
+                                            <span [hidden]="!(sortType == 'naviera' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'naviera' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="referType" (sorted)="sort($event)">Reefer Type
+                                            <span [hidden]="!(sortType == 'referType' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'referType' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="malfunction" (sorted)="sort($event)">Malfunction
+                                            <span [hidden]="!(sortType == 'malfunction' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'malfunction' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="portTerminal" (sorted)="sort($event)">Port Terminal
+                                            <span [hidden]="!(sortType == 'portTerminal' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'portTerminal' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="requestDate" (sorted)="sort($event)">Request Date
+                                            <span [hidden]="!(sortType == 'requestDate' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'requestDate' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="requestTime" (sorted)="sort($event)">Request Time
+                                            <span [hidden]="!(sortType == 'requestTime' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'requestTime' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="vesselIn" (sorted)="sort($event)">Vessel In
+                                            <span [hidden]="!(sortType == 'vesselIn' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'vesselIn' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="vesselOut" (sorted)="sort($event)">Vessel Out
+                                            <span [hidden]="!(sortType == 'vesselOut' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'vesselOut' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="portOfLoading" (sorted)="sort($event)">Port of loading
+                                            <span [hidden]="!(sortType == 'portOfLoading' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'portOfLoading' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="technician" (sorted)="sort($event)">Technician
+                                            <span [hidden]="!(sortType == 'technician' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'technician' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th>Created By</th>
+                                        <th sortBy="createdOn" (sorted)="sort($event)">Created On
+                                            <span [hidden]="!(sortType == 'createdOn' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'createdOn' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th>Mode</th>
+                                        <th>Edit</th>
+                                        <th>Delete</th>
+                                    </tr>
+                                    <tr *ngFor="let o of filteredOrders">
+                                        <td>
+                                            <input type="checkbox" (click)="checkOneByOne(o)" name="checkOne" value="check2">
+                                        </td>
+                                        <td>{{o.containerNumber}}</td>
+                                        <td>{{o.naviera}}</td>
+                                        <td>{{o.referType}}</td>
+                                        <td>{{o.malfunction}}</td>
+                                        <td>{{o.portTerminal}}</td>
+                                        <td>{{o.requestDate.day}}/{{o.requestDate.month}}/{{o.requestDate.year}}</td>
+                                        <td>{{o.requestTime.hour}}:{{o.requestTime.minute}}</td>
+                                        <td>{{o.vesselIn}}</td>
+                                        <td>{{o.vesselOut}}</td>
+                                        <td>{{o.portOfLoading}}</td>
+                                        <td>{{o.technician}}</td>
+                                        <td>Admin</td>
+                                        <td>{{o.createdOn | date:'MMM d, y h:mm'}}</td>
+                                        <td>Email</td>
+                                        <td>
+                                            <a (click)="openEditModal(content1,o)">
+                                                <i class="fa fa-pencil-square-o" style="font-size:18px;" aria-hidden="true"></i>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a (click)="openDeleteModal(content,o)">
+                                                <i class="fa fa-trash-o" style="font-size:18px;color:red"></i>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br>
+
+
+                            <!-- EDIT MODAL DETAILS -->
+
+                            <ng-template #content1 let-modal>
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modal-edit">Update Container Details</h4>
+                                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+
+                                    <table style="width: 100%; border-collapse: collapse; " class="table-borderless">
+                                        <tr>
+                                            <td style="width:33%; ">Container Number</td>
+                                            <td>
+                                                <input class="form-control" type="text" name="containerNumber" id="formFields_1"
+                                                    [(ngModel)]="EcontainerNumber" ngModel>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="width:33%; ">Naviera</td>
+                                            <td>
+                                                <form [formGroup]="editNavieraForm">
+                                                    <select class="form-control" formControlName="mNaviera">
+                                                        <option *ngFor="let n of naviera" [ngValue]="n">{{n}}</option>
+                                                    </select>
+                                                </form>
+                                            </td>
+
+                                        </tr>
+                                        <tr>
+                                            <td>Reefer Type</td>
+                                            <td>
+                                                <form [formGroup]="editReeferForm">
+                                                    <select class="form-control" formControlName="mReefer">
+                                                        <option *ngFor="let r of referType" [ngValue]="r">{{r}}</option>
+                                                    </select>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Request Date</td>
+                                            <td>
+                                                <form [formGroup]="editDateForm">
+                                                    <div class='input-group date'>
+                                                        <input class="form-control" placeholder="yyyy-mm-dd" formControlName="mRequestDate" ngbDatepicker #e1="ngbDatepicker">
+                                                        <div class="input-group-append">
+                                                            <button class="btn btn-outline-secondary calendar" (click)="e1.toggle()" type="button"></button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Request Time</td>
+                                            <td>
+                                                <form [formGroup]="editTimeForm">
+                                                    <ngb-timepicker formControlName="mRequestTime" [spinners]="false"></ngb-timepicker>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Malfunction</td>
+                                            <td>
+                                                <form [formGroup]="editMalfunctionsForm">
+                                                    <select class="form-control" formControlName="mMalfunction">
+                                                        <option *ngFor="let m of malfunctions" [ngValue]="m">{{m}}</option>
+                                                    </select>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Port Terminal</td>
+                                            <td>
+                                                <form [formGroup]="editPortTerminalForm">
+                                                    <select class="form-control" formControlName="mPortTerminal">
+                                                        <option *ngFor="let p of portTerminal" [ngValue]="p">{{p}}</option>
+                                                    </select>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vessel In</td>
+                                            <td>
+                                                <input class="form-control" type="text" name="naviera" id="formFields_8" [(ngModel)]="EvesselIn"
+                                                    ngModel>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vessel Out</td>
+                                            <td>
+                                                <input class="form-control" type="text" name="naviera" id="formFields_9" [(ngModel)]="EvesselOut"
+                                                    ngModel>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Port of Landing</td>
+                                            <td>
+                                                <input class="form-control" type="text" name="naviera" id="formFields_10" [(ngModel)]="EportOfLoading"
+                                                    ngModel>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Technician</td>
+                                            <td>
+                                                <form [formGroup]="editTechnicianForm">
+                                                    <select class="form-control" formControlName="mTechnician">
+                                                        <option *ngFor="let t of technicians" [ngValue]="t">{{t}}</option>
+                                                    </select>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    </table>
+
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-dark" (click)="updateContainer(content2)">Ok</button>
+                                </div>
+
+                            </ng-template>
+
+
+                            <!-- UPDATE SUCCESSFULL MODAL -->
+                            <ng-template #content2 let-modal>
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modal-edit-success">Updated Successfully</h4>
+                                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Container case has been updated Successfully</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Close</button>
+                                </div>
+                            </ng-template>
+
+
+
+                            <!-- DELETE MODAL -->
+                            <ng-template #content let-modal>
+                                <div class="modal-header">
+                                    <h4 class="modal-title" id="modal-delete">Delete Container Number</h4>
+                                    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>
+                                        <strong>Are you sure you want to delete container number
+                                            <span class="text-primary"> {{cnum}} </span> ?</strong>
+                                    </p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-outline-dark" (click)="deleteContainer()">Ok</button>
+                                </div>
+                            </ng-template>
+
+
+
+
+                            <div class="alert alert-success text-center" *ngIf="isAddedTech">
+                                Technicians assigned successfully
+                            </div>
+                            <div class="alert alert-danger text-center" *ngIf="cannotMove">
+                                Technicians already assigned
+                            </div>
+                            <br>
+
+                            <div class=" input-group-btn">
+                                <span>
+                                    <button type="button" class="btn btn-primary" (click)="assignTechnician()">Assign containers to technicians</button>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div *ngIf="ongoing">
+                            <div style="overflow-x:auto;">
+                                <table class="table table-hover" style="width:100%">
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" name="checkAll" value="check1">
+                                        </th>
+                                        <th sortBy="containerNumber" (sorted)="sort($event)">Container Number
+                                            <span [hidden]="!(sortType == 'containerNumber' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'containerNumber' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="naviera" (sorted)="sort($event)">Port terminal
+                                            <span [hidden]="!(sortType == 'naviera' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'naviera' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <!-- <th>Mode of creation</th>
+                                    <th>Created by</th> -->
+                                        <th sortBy="requestDate" (sorted)="sort($event)">Request date
+                                            <span [hidden]="!(sortType == 'requestDate' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'requestDate' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="requestTime" (sorted)="sort($event)">Request time
+                                            <span [hidden]="!(sortType == 'requestTime' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'requestTime' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="technician" (sorted)="sort($event)">Technician
+                                            <span [hidden]="!(sortType == 'technician' && !sortReverse)" class="fa fa-caret-down"></span>
+                                            <span [hidden]="!(sortType == 'technician' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th>Accepted</th>
+                                        <th>Finished</th>
+                                        <th>Repair Date</th>
+                                        <th>Repair Time</th>
+                                        <th>Status</th>
+                                        <th>Type of monitoring</th>
+                                        <th>Pictures Required</th>
+                                        <th>Spare parts needed</th>
+                                        <th>Remarks(1)</th>
+                                        <th>Remarks(2)</th>
+
+
+                                    </tr>
+                                    <tr *ngFor="let m of filteredMonitoringData">
+                                        <td>
+                                            <input type="checkbox" name="checkOneByOne" value="check2">
+                                        </td>
+                                        <td>{{m.containerNumber}}</td>
+                                        <td>{{m.naviera}}</td>
+                                        <!-- <td>Email</td>
+                                    <td>Admin</td> -->
+                                        <td>{{m.requestDate.day}}/{{m.requestDate.month}}/{{m.requestDate.year}}</td>
+                                        <td>{{m.requestTime.hour}}:{{m.requestTime.minute}}</td>
+                                        <td>{{m.technician}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                    </tr>
+
+                                </table>
+                            </div>
+                            <br>
+
+                            <div class="alert alert-success text-center" *ngIf="isAddedMonitor">
+                                Records set for monitoring Successfully.
+                            </div>
+                            <br>
+
+                            <div class=" input-group-btn">
+                                <span>
+                                    <button type="button" class="btn btn-primary" (click)="assignMonitoring()">Select containers for monitoring</button>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <div class="tab-pane padding active" *ngIf="showReports">
+                        <filter-textbox (changed)="filterChanged($event)"></filter-textbox>
+                        <br>
+                        <div style="overflow-x:auto;">
+                            <table class="table table-hover" style="width:100%">
+                                <tr>
+                                    <th>
+                                        <input type="checkbox" name="checkAll" value="check1">
+                                    </th>
+                                    <th sortBy="containerNumber" (sorted)="sort($event)">Container Number
+                                        <span [hidden]="!(sortType == 'containerNumber' && !sortReverse)" class="fa fa-caret-down"></span>
+                                        <span [hidden]="!(sortType == 'containerNumber' && sortReverse)" class="fa fa-caret-up"></span>
+                                    </th>
+                                    <th sortBy="naviera" (sorted)="sort($event)">Port terminal
+                                        <span [hidden]="!(sortType == 'naviera' && !sortReverse)" class="fa fa-caret-down"></span>
+                                        <span [hidden]="!(sortType == 'naviera' && sortReverse)" class="fa fa-caret-up"></span>
+                                    </th>
+                                    <th>Mode of creation</th>
+                                    <th>Created by</th>
+                                    <th sortBy="requestDate" (sorted)="sort($event)">Request date
+                                        <span [hidden]="!(sortType == 'requestDate' && !sortReverse)" class="fa fa-caret-down"></span>
+                                        <span [hidden]="!(sortType == 'requestDate' && sortReverse)" class="fa fa-caret-up"></span>
+                                    </th>
+                                    <th sortBy="requestTime" (sorted)="sort($event)">Request time
+                                        <span [hidden]="!(sortType == 'requestTime' && !sortReverse)" class="fa fa-caret-down"></span>
+                                        <span [hidden]="!(sortType == 'requestTime' && sortReverse)" class="fa fa-caret-up"></span>
+                                    </th>
+                                    <th sortBy="technician" (sorted)="sort($event)">Technician
+                                        <span [hidden]="!(sortType == 'technician' && !sortReverse)" class="fa fa-caret-down"></span>
+                                        <span [hidden]="!(sortType == 'technician' && sortReverse)" class="fa fa-caret-up"></span>
+                                    </th>
+                                    <th>Accepted</th>
+                                    <th>Finished</th>
+                                    <th>Repair Date</th>
+                                    <th>Repair Time</th>
+                                    <th>Status</th>
+                                    <th>Type of monitoring</th>
+                                    <th>Pictures Required</th>
+                                    <th>Spare parts needed</th>
+                                    <th>Remarks(1)</th>
+                                    <th>Remarks(2)</th>
+
+
+                                </tr>
+                                <tr *ngFor="let m of filteredMonitoringData">
+                                    <td>
+                                        <input type="checkbox" name="checkOneByOne" value="check2">
+                                    </td>
+                                    <td>{{m.containerNumber}}</td>
+                                    <td>{{m.naviera}}</td>
+                                    <td>Email</td>
+                                    <td>Admin</td>
+                                    <td>{{m.requestDate.day}}/{{m.requestDate.month}}/{{m.requestDate.year}}</td>
+                                    <td>{{m.requestTime.hour}}:{{m.requestTime.minute}}</td>
+                                    <td>{{m.technician}}</td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+
+                                </tr>
+
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- <button class="btn btn-submit" type="submit" id="btnMonitor">Select Records which needs Monitoring</button> -->
+
+            </div>
+        </div>
+
+</app-layout>

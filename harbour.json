@@ -1,0 +1,131 @@
+{
+  "users": [
+    {
+      "name": "admin",
+      "password": "admin",
+      "designation": "Admin"
+    },
+    {
+      "name": "user1",
+      "password": "user1",
+      "designation": "Traffic Controller"
+    },
+    {
+      "name": "user2",
+      "password": "user2",
+      "designation": "Technician"
+    }
+  ],
+  "orders": [
+    {
+      "id": "1",
+      "containerNumber": "PONU4586001",
+      "naviera": "APL",
+      "referType": "admin",
+      "malfunction": "damage",
+      "portTerminal": "MSK",
+      "requestDate": {
+        "year": 2018,
+        "month": 9,
+        "day": 21
+      },
+      "requestTime": {
+        "hour": 7,
+        "minute": 45,
+        "second": 0
+      },
+      "vesselIn": "22/9/2018",
+      "vesselOut": "23/9/2018",
+      "portOfLoading": "ALASKA",
+      "technician": "user2",
+      "createdOn": "1539690719728"
+    },
+    {
+      "id": "3",
+      "containerNumber": "DEFU4586001",
+      "naviera": "MSC",
+      "referType": "admin",
+      "malfunction": "damage",
+      "portTerminal": "MSK2",
+      "requestDate": {
+        "year": 2018,
+        "month": 9,
+        "day": 23
+      },
+      "requestTime": {
+        "hour": 9,
+        "minute": 45,
+        "second": 0
+      },
+      "vesselIn": "22/9/2018",
+      "vesselOut": "23/9/2018",
+      "portOfLoading": "ALASKA",
+      "technician": "user2",
+      "createdOn": "1539690684566"
+    },
+    {
+      "id": "IsopINf",
+      "containerNumber": "AQWS1234565",
+      "naviera": "APL",
+      "referType": "Normal",
+      "malfunction": "FC EARTH FAULT ALARM",
+      "portTerminal": "CP1-CARNES DE COCLE",
+      "requestDate": {
+        "year": 2018,
+        "month": 10,
+        "day": 25
+      },
+      "requestTime": {
+        "hour": 4,
+        "minute": 23,
+        "second": 0
+      },
+      "vesselIn": "qwe",
+      "vesselOut": "ewq",
+      "portOfLoading": "qas",
+      "technician": "user2",
+      "createdOn": 1540462893764
+    }
+  ],
+  "monitoring": [
+    {
+      "id": "1",
+      "containerNumber": "PONU4586001",
+      "naviera": "MSK",
+      "referType": "admin",
+      "malfunction": "damage",
+      "portTerminal": "MSK",
+      "requestDate": {
+        "year": 2018,
+        "month": 9,
+        "day": 21
+      },
+      "requestTime": {
+        "hour": 10,
+        "minute": 23,
+        "second": 0
+      },
+      "vesselIn": "22/9/2018",
+      "vesselOut": "23/9/2018",
+      "portOfLoading": "ALASKA",
+      "technician": "user5",
+      "createdOn": "1539690719728"
+    }
+  ],
+  "reports": [
+    {
+      "id": "1",
+      "containerNumber": "XWFU458600",
+      "assignee": "alan",
+      "comment": "Out for delivery",
+      "date": "19/9/2018"
+    },
+    {
+      "id": "2",
+      "containerNumber": "TYHW76910",
+      "assignee": "james",
+      "comment": "Resolved",
+      "date": "20/9/2018"
+    }
+  ]
+}

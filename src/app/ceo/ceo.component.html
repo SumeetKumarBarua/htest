@@ -1,0 +1,151 @@
+<app-layout>
+
+
+    <div id="exTab1" class="container">
+        <div class="row" *ngIf="!viewReport">
+            <div class=" input-group-btn" style="margin-left: 77%">
+                <span>
+                    <button class="btn" (click)="viewDetails()">View Reports</button>
+                </span>
+            </div>
+
+            <div class="col-md-12">
+                <br>
+                <div class="col-md-5">
+                    <div class="">
+                        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions" [legend]="barChartLegend"
+                            [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-2"></div>
+
+                <div class="col-md-5">
+
+                    <div class="">
+                        <canvas baseChart [datasets]="barChartData1" [labels]="barChartLabels1" [options]="barChartOptions" [legend]="barChartLegend"
+                            [chartType]="barChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+
+                <!-- ======================== -->
+
+
+
+                <div class="col-md-5">
+                    <div class="">
+                        <canvas baseChart [chartType]="'line'" [datasets]="lineChartData" [labels]="lineChartLabels" [options]="chartOptions" [legend]="true"
+                            [colors]="lineColors" (chartClick)="onChartClick($event)">
+                        </canvas>
+                    </div>
+                </div>
+
+                <div class="col-md-2"></div>
+
+                <div class="col-md-5">
+                    <div class="">
+                        <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)"
+                            (chartClick)="chartClicked($event)"></canvas>
+                    </div>
+                </div>
+            </div>
+            <br>
+            <br>
+
+
+        </div>
+
+
+
+        <!-- ************************************************************* -->
+
+
+
+        <div *ngIf="viewReport">
+            <ul class="nav nav-pills">  
+                <li>              
+                    <a (click)="displayReports()" id="btnReport" data-toggle="tab">Reports</a>
+                </li>
+            </ul>
+            
+
+            <div class="tab-content ">
+
+                <div class="tab-pane padding active" *ngIf="showReports">
+                        <filter-textbox (changed)="filterChanged($event)"></filter-textbox>
+                        <br>   
+                    <div style="overflow-x:auto;">
+                            <table class="table table-hover" style="width:100%">
+                                    <tr>
+                                        <th>
+                                            <input type="checkbox" name="checkAll" value="check1">
+                                        </th>                                    
+                                        <th sortBy="containerNumber" (sorted)="sort($event)">Container Number
+                                                <span  [hidden]="!(sortType == 'containerNumber' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'containerNumber' && sortReverse)" class="fa fa-caret-up"></span>
+                                            </th>
+                                        <th sortBy="naviera" (sorted)="sort($event)">Port terminal
+                                                <span  [hidden]="!(sortType == 'naviera' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'naviera' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th>Mode of creation</th>
+                                        <th>Created by</th>
+                                        <th sortBy="requestDate" (sorted)="sort($event)">Request date
+                                                <span  [hidden]="!(sortType == 'requestDate' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'requestDate' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="requestTime" (sorted)="sort($event)">Request time
+                                                <span  [hidden]="!(sortType == 'requestTime' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'requestTime' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th sortBy="technician" (sorted)="sort($event)">Technician
+                                                <span  [hidden]="!(sortType == 'technician' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'technician' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
+                                        <th>Accepted</th>
+                                        <th>Finished</th>
+                                        <th>Repair Date</th>
+                                        <th>Repair Time</th>
+                                        <th>Status</th>
+                                        <th>Type of monitoring</th>
+                                        <th>Pictures Required</th>
+                                        <th>Spare parts needed</th>
+                                        <th>Remarks(1)</th>
+                                        <th>Remarks(2)</th>
+                                       
+                                                            
+                                    </tr>
+                                    <tr *ngFor="let m of filteredMonitoringData">
+                                        <td>
+                                            <input type="checkbox" name="checkOneByOne" value="check2">
+                                        </td>
+                                        <td>{{m.containerNumber}}</td>
+                                        <td>{{m.naviera}}</td>
+                                        <td>Email</td>
+                                        <td>Admin</td>
+                                        <td>{{m.requestDate.day}}/{{m.requestDate.month}}/{{m.requestDate.year}}</td>
+                                        <td>{{m.requestTime.hour}}:{{m.requestTime.minute}}</td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>      
+                                        
+                                    </tr>
+        
+                                </table>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+</app-layout>

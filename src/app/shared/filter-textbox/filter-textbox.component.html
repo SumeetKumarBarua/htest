@@ -1,0 +1,7 @@
+<form >
+    <div class="input-group " style="margin-left: 0%; width: 15em;">
+        <div style="color: white; width: 3em" class="input-group-addon"><i class="fa fa-search"></i></div>
+            <input type="search" class="form-control" placeholder="Search" name="filter" [(ngModel)]="model.filter" (keyup)="filterChanged($event)"  />
+    </div>
+    
+</form>
