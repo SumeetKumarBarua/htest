@@ -66,7 +66,7 @@ export class CeoComponent implements OnInit {
 
 
   fetchMonitoring = function() {
-    this.http.get("http://localhost:3000/monitoring").subscribe(
+    this.http.get("https://easy-json-server.herokuapp.com/monitoring").subscribe(
       (res: Response) => {
         this.monitoringData = res.json();
         this.filteredMonitoringData=this.monitoringData.sort(function(a, b) {
@@ -85,7 +85,7 @@ export class CeoComponent implements OnInit {
   }
 
   fetchReports = function() {
-    this.http.get("http://localhost:3000/reports").subscribe(
+    this.http.get("https://easy-json-server.herokuapp.com/reports").subscribe(
       (res: Response) => {
         this.reports = res.json();
       }

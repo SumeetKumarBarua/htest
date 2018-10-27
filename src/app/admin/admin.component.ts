@@ -157,7 +157,7 @@ export class AdminComponent implements OnInit {
 
 
   fetchOrders = function() {
-    this.http.get("http://localhost:3000/orders").subscribe(
+    this.http.get("https://easy-json-server.herokuapp.com/orders").subscribe(
       (res: Response) => {
         this.orders = res.json();
         // sort by created on
@@ -177,7 +177,7 @@ export class AdminComponent implements OnInit {
   }
 
   fetchMonitoring = function() {
-    this.http.get("http://localhost:3000/monitoring").subscribe(
+    this.http.get("https://easy-json-server.herokuapp.com/monitoring").subscribe(
       (res: Response) => {
         this.monitoringData = res.json();
         this.filteredMonitoringData=this.monitoringData.sort(function(a, b) {
@@ -196,7 +196,7 @@ export class AdminComponent implements OnInit {
   }
 
   fetchReports = function() {
-    this.http.get("http://localhost:3000/reports").subscribe(
+    this.http.get("https://easy-json-server.herokuapp.com/reports").subscribe(
       (res: Response) => {
         this.reports = res.json();
       }
@@ -205,7 +205,7 @@ export class AdminComponent implements OnInit {
 
   deleteContainer(){      
     console.log("--->",this.toBeDeleted);
-      const url = `${"http://localhost:3000/orders"}/${this.toBeDeleted}`;
+      const url = `${"https://easy-json-server.herokuapp.com/orders"}/${this.toBeDeleted}`;
       return this.http.delete(url, {headers: this.headers}).toPromise()
         .then(() => {
         this.ngOnInit();
@@ -221,7 +221,7 @@ export class AdminComponent implements OnInit {
 
   assignTechnician=function(){
     console.log("ongoingobj  : ",this.onGoingObj);
-    this.http.post("http://localhost:3000/monitoring", this.onGoingObj).subscribe((res:Response) => {            
+    this.http.post("https://easy-json-server.herokuapp.com/monitoring", this.onGoingObj).subscribe((res:Response) => {            
       this.isAddedTech=true;
     },
     (res:Response) =>{   
@@ -275,7 +275,7 @@ export class AdminComponent implements OnInit {
       "createdOn":new Date().getTime()
     }
     console.log("obj  : ",this.orderObj);
-    this.http.post("http://localhost:3000/orders", this.orderObj).subscribe((res:Response) => {
+    this.http.post("https://easy-json-server.herokuapp.com/orders", this.orderObj).subscribe((res:Response) => {
       this.isAdded = true;        
     })
   }
@@ -314,7 +314,7 @@ export class AdminComponent implements OnInit {
       "createdOn":new Date().getTime()      
     }
     //console.log("con obj  : ",this.orderObj);
-      const url = `${"http://localhost:3000/orders"}/${this.toBeEdited}`;
+      const url = `${"https://easy-json-server.herokuapp.com/orders"}/${this.toBeEdited}`;
       this.http.put(url, JSON.stringify(this.orderObj), {headers: this.headers})
         .toPromise()
         .then(() => {   

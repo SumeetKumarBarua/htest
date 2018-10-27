@@ -28,7 +28,7 @@ export class TechnicianComponent implements OnInit {
 
   results = [];
   fetchOrders = function() {
-    this.http.get("http://localhost:3000/orders").subscribe(
+    this.http.get("https://easy-json-server.herokuapp.com/orders").subscribe(
       (res: Response) => {
         this.orders = this.filteredOrders = res.json();
         
@@ -37,7 +37,7 @@ export class TechnicianComponent implements OnInit {
   }
 
   fetchMonitoring = function() {
-    this.http.get("http://localhost:3000/monitoring").subscribe(
+    this.http.get("https://easy-json-server.herokuapp.com/monitoring").subscribe(
       (res: Response) => {
         this.monitoring = this.monitoringData = res.json();
       }
@@ -45,7 +45,7 @@ export class TechnicianComponent implements OnInit {
   }
 
   fetchReports = function() {
-    this.http.get("http://localhost:3000/reports").subscribe(
+    this.http.get("https://easy-json-server.herokuapp.com/reports").subscribe(
       (res: Response) => {
         this.reports = res.json();
       }
