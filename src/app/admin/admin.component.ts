@@ -100,7 +100,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {   
     this.fetchOrders();
-    this.fetchReports();
+    //this.fetchReports();
     this.fetchMonitoring();
     this.clearData();
   }

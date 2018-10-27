@@ -92,7 +92,7 @@ export class TechnicianComponent implements OnInit {
   ngOnInit() {
     this.fetchOrders();
     this.fetchMonitoring();
-    this.fetchReports();
+    //this.fetchReports();
   }
 
   Pending=function(){
