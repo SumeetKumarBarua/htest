@@ -6,10 +6,43 @@ html,body {
   height: 100%;
 }
 
-.testing{
+.testing1{
   background: url('/assets/images/ic_notification.png');
+  
+}
+.testing2{
   background: url('/assets/images/ic_home.png');
+  
+}
+.testing3{
   background: url('/assets/images/user.png');
+}
+.testing4{
+  background: url('/assets/images/calendar_icon.png');
+}
+.testing5{
+  background: url('/assets/images/email.png');
+}
+.testing6{
+  background: url('/assets/images/ftp.png');
+}
+.testing7{
+  background: url('/assets/images/webapp.png');
+}
+.testing8{
+  background: url('/assets/images/Shape.png');
+}
+.testing9{
+  background: url('/assets/images/settings_icon.png');
+}
+.testing10{
+  background: url('/assets/images/select-icon.png');
+}
+.testing11{
+  background: url('/assets/images/ic_message.png');
+}
+.testing12{
+  background: url('/assets/images/ic_feed.png');
 }
 
 .login-bg {
