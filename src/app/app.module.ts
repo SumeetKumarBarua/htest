@@ -17,7 +17,7 @@ import { ChartsModule } from 'ng2-charts';
 import { CookieService } from 'ngx-cookie-service';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
+//import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
 
 
 
@@ -73,4 +73,4 @@ const appRoutes:Routes=[
   bootstrap: [AppComponent]
 })
 export class AppModule { }
-platformBrowserDynamic().bootstrapModule(AppModule)
+//platformBrowserDynamic().bootstrapModule(AppModule)
