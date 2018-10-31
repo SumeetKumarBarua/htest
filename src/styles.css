@@ -6,6 +6,12 @@ html,body {
   height: 100%;
 }
 
+body {
+  font-family: 'Montserrat', sans-serif;
+  font-size: 14px;
+  height: 100%;
+}
+
 .testing1{
   background: url('/assets/images/ic_notification.png');
   
@@ -86,6 +92,13 @@ background-position: center;
   border-radius: 6px;
   background-color: #e7f0fe;
   border:1px solid #b6d1fc;
+  display: block;
+    width: 100%;
+    height: calc(2.25rem + 2px);
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;    
 }
 
 
@@ -246,9 +259,8 @@ ul,ol {
   
 }
 .tab-content {
-  border: 1px solid #CCD6DD;
- 
-  margin-top: -6px;
+  border: 1px solid #CCD6DD; 
+  margin-top: -2px;
 }
 .padding {
   padding: 35px;

@@ -1,7 +1,7 @@
 <app-layout>
 
 
-    <div id="exTab1" class="container">
+    <div id="exTab1" class="container" style="font-family: 'Montserrat', sans-serif;">
         <div class="row" *ngIf="!createContainer1">
             <div class=" input-group-btn" style="margin-left: 65%">
                 <span>
@@ -69,19 +69,19 @@
                                 <tr>
                                     <td>UserName</td>
                                     <td>
-                                       <input class="form-control form-inputText" type="text" formControlName="userName" required>                                       
+                                       <input class=" form-inputText" type="text" formControlName="userName" required>                                       
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Password</td>
                                     <td>
-                                        <input class="form-control form-inputText" type="password" formControlName="password" required>
+                                        <input class="form-inputText" type="password" formControlName="password" required>
                                     </td>
                                 </tr>                                
                                 <tr>
                                     <td>Role</td>
                                     <td>
-                                        <select class="form-control form-inputText" formControlName="role" required>
+                                        <select class="form-inputText" formControlName="role" required>
                                                 <option *ngFor="let r of roles">{{r}}</option>
                                         </select>                                        
                                     </td>
@@ -111,9 +111,6 @@
                                 <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Close</button>
                             </div>
                     </ng-template>
-
-
-
         </div>
 
 
@@ -150,7 +147,6 @@
 
             <div class="tab-content ">
 
-
                 <div class="tab-pane padding active" *ngIf="showNew">
                     <form id="formNewOrder" class="form-horizontal" [formGroup]="orderDataForm" (ngSubmit)="addNewContainer(orderDataForm.value)">
 
@@ -160,7 +156,7 @@
                                 <div class="form-group">
                                     <label for="example-text-input" class="col-md-4">Container Number</label>
                                     <div class="col-md-8">                                        
-                                        <input class="form-control form-inputText" type="text" formControlName="containerNumber" required>
+                                        <input class="form-inputText" type="text" formControlName="containerNumber" required>
                                         <div class="alert alert-danger text-center" *ngIf="orderDataForm.controls.containerNumber.invalid && orderDataForm.controls.containerNumber.touched">
                                             Should comprise of 4 alphabets followed by 7 digits. eg:ASWD3213456
                                         </div>
@@ -169,7 +165,7 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Naviera</label>
                                         <div class="col-md-8">                                            
-                                            <select class="form-control form-inputText" formControlName="navieraSelected" required>
+                                            <select class="form-inputText" formControlName="navieraSelected" required>
                                                 <option *ngFor="let n of naviera">{{n}}</option>
                                             </select>
                                         </div>
@@ -177,7 +173,7 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Reefer Type</label>
                                         <div class="col-md-8">                                            
-                                            <select class="form-control form-inputText" formControlName="referSelected" required>
+                                            <select class="form-inputText" formControlName="referSelected" required>
                                                 <option *ngFor="let r of referType">{{r}}</option>
                                             </select>
                                         </div>
@@ -186,12 +182,13 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Request Date</label>
                                         <div class="col-md-8 ">
-                                            <div class='input-group date'>
-                                                <input class="form-control form-inputText" placeholder="yyyy-mm-dd" formControlName="requestDate" ngbDatepicker #d1="ngbDatepicker">
-                                                <div class="input-group-append">
-                                                    <button style="background-color: #e7f0fe" class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
-                                                </div>
-                                            </div>
+                                                <div class="input-group">
+                                                        <input class="form-control" placeholder="yyyy-mm-dd"
+                                                        formControlName="requestDate" ngbDatepicker #d1="ngbDatepicker">
+                                                        <div class="input-group-append">
+                                                          <button style="background-color: #e7f0fe" class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+                                                        </div>
+                                                      </div>                                            
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -206,7 +203,7 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Malfunction</label>
                                         <div class="col-md-8">
-                                            <select class="form-control form-inputText" formControlName="malfunctionSelected" required>
+                                            <select class="form-inputText" formControlName="malfunctionSelected" required>
                                                 <option *ngFor="let m of malfunctions">{{m}}</option>
                                             </select>
                                         </div>
@@ -217,7 +214,7 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Port Terminal</label>
                                         <div class="col-md-8">
-                                            <select class="form-control form-inputText" formControlName="portTerminalSelected" required>
+                                            <select class="form-inputText" formControlName="portTerminalSelected" required>
                                                 <option *ngFor="let p of portTerminal">{{p}}</option>
                                             </select>
                                         </div>
@@ -225,25 +222,25 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Vessel In</label>
                                         <div class="col-md-8">
-                                             <input class="form-control form-inputText" type="text" formControlName="vesselIn" required>
+                                             <input class="form-inputText" type="text" formControlName="vesselIn" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Vessel Out</label>
                                         <div class="col-md-8">
-                                             <input class="form-control form-inputText" type="text" formControlName="vesselOut" required>
+                                             <input class="form-inputText" type="text" formControlName="vesselOut" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Port Of Loading</label>
                                         <div class="col-md-8">
-                                             <input class="form-control form-inputText" type="text" formControlName="portOfLoading" required>
+                                             <input class="form-inputText" type="text" formControlName="portOfLoading" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Technician</label>
                                         <div class="col-md-8">                                            
-                                            <select class="form-control form-inputText" formControlName="technicianSelected" required>
+                                            <select class="form-inputText" formControlName="technicianSelected" required>
                                                 <option *ngFor="let t of technicians">{{t}}</option>
                                             </select>
                                         </div>
@@ -280,7 +277,7 @@
                         </ul>
                         <div *ngIf="pending">
                             <div style="overflow-x:auto;">
-                                <table style="width:100%" class="table table-striped table-hover">
+                                <table style="width:100%; margin-top: -1rem" class="table table-striped table-hover">
                                     <tr>
                                         <th>
                                             <input type="checkbox" name="checkAll" value="check1">
@@ -388,7 +385,7 @@
                                         <tr>
                                             <td style="width:33%; ">Container Number</td>
                                             <td>
-                                                <input class="form-control form-inputText" type="text" name="containerNumber" id="formFields_1"
+                                                <input class="form-inputText" type="text" name="containerNumber" id="formFields_1"
                                                     [(ngModel)]="EcontainerNumber" ngModel>
                                             </td>
                                         </tr>
@@ -396,7 +393,7 @@
                                             <td style="width:33%; ">Naviera</td>
                                             <td>
                                                 <form [formGroup]="editNavieraForm">
-                                                    <select class="form-control form-inputText" formControlName="mNaviera">
+                                                    <select class="form-inputText" formControlName="mNaviera">
                                                         <option *ngFor="let n of naviera" [ngValue]="n">{{n}}</option>
                                                     </select>
                                                 </form>
@@ -407,7 +404,7 @@
                                             <td>Reefer Type</td>
                                             <td>
                                                 <form [formGroup]="editReeferForm">
-                                                    <select class="form-control form-inputText" formControlName="mReefer">
+                                                    <select class="form-inputText" formControlName="mReefer">
                                                         <option *ngFor="let r of referType" [ngValue]="r">{{r}}</option>
                                                     </select>
                                                 </form>
@@ -417,12 +414,13 @@
                                             <td>Request Date</td>
                                             <td>
                                                 <form [formGroup]="editDateForm">
-                                                    <div class='input-group date'>
-                                                        <input class="form-control form-inputText" placeholder="yyyy-mm-dd" formControlName="mRequestDate" ngbDatepicker #e1="ngbDatepicker">
-                                                        <div class="input-group-append">
-                                                            <button style="background-color: #e7f0fe" class="btn btn-outline-secondary calendar" (click)="e1.toggle()" type="button"></button>
-                                                        </div>
-                                                    </div>
+                                                    <div class="input-group">
+                                                            <input class="form-control" placeholder="yyyy-mm-dd"
+                                                            formControlName="mRequestDate" ngbDatepicker #e1="ngbDatepicker">
+                                                            <div class="input-group-append">
+                                                                <button style="background-color: #e7f0fe" class="btn btn-outline-secondary calendar" (click)="e1.toggle()" type="button"></button>
+                                                            </div>
+                                                            </div>                                                    
                                                 </form>
                                             </td>
                                         </tr>
@@ -438,7 +436,7 @@
                                             <td>Malfunction</td>
                                             <td>
                                                 <form [formGroup]="editMalfunctionsForm">
-                                                    <select class="form-control form-inputText" formControlName="mMalfunction">
+                                                    <select class="form-inputText" formControlName="mMalfunction">
                                                         <option *ngFor="let m of malfunctions" [ngValue]="m">{{m}}</option>
                                                     </select>
                                                 </form>
@@ -448,7 +446,7 @@
                                             <td>Port Terminal</td>
                                             <td>
                                                 <form [formGroup]="editPortTerminalForm">
-                                                    <select class="form-control form-inputText" formControlName="mPortTerminal">
+                                                    <select class="form-inputText" formControlName="mPortTerminal">
                                                         <option *ngFor="let p of portTerminal" [ngValue]="p">{{p}}</option>
                                                     </select>
                                                 </form>
@@ -457,21 +455,21 @@
                                         <tr>
                                             <td>Vessel In</td>
                                             <td>
-                                                <input class="form-control form-inputText" type="text" name="naviera" id="formFields_8" [(ngModel)]="EvesselIn"
+                                                <input class="form-inputText" type="text" name="naviera" id="formFields_8" [(ngModel)]="EvesselIn"
                                                     ngModel>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Vessel Out</td>
                                             <td>
-                                                <input class="form-control form-inputText" type="text" name="naviera" id="formFields_9" [(ngModel)]="EvesselOut"
+                                                <input class="form-inputText" type="text" name="naviera" id="formFields_9" [(ngModel)]="EvesselOut"
                                                     ngModel>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Port of Landing</td>
                                             <td>
-                                                <input class="form-control form-inputText" type="text" name="naviera" id="formFields_10" [(ngModel)]="EportOfLoading"
+                                                <input class="form-inputText" type="text" name="naviera" id="formFields_10" [(ngModel)]="EportOfLoading"
                                                     ngModel>
                                             </td>
                                         </tr>
@@ -479,7 +477,7 @@
                                             <td>Technician</td>
                                             <td>
                                                 <form [formGroup]="editTechnicianForm">
-                                                    <select class="form-control form-inputText" formControlName="mTechnician">
+                                                    <select class="form-inputText" formControlName="mTechnician">
                                                         <option *ngFor="let t of technicians" [ngValue]="t">{{t}}</option>
                                                     </select>
                                                 </form>
@@ -552,7 +550,7 @@
 
                         <div *ngIf="ongoing">
                             <div style="overflow-x:auto;">
-                                <table class="table table-hover" style="width:100%">
+                                <table class="table table-hover" style="width:100%; margin-top: -1rem">
                                     <tr>
                                         <th>
                                             <input type="checkbox" name="checkAll" value="check1">
