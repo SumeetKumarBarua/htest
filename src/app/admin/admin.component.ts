@@ -21,6 +21,7 @@ export class AdminComponent implements OnInit {
   
   private headers = new Headers({ 'Content-Type': 'application/json'});
   technicians = ['--select--','user2','user5','user6'];
+  roles = ['--select--','Traffic Controller','Technician'];
   naviera = ['--select--','MSC', 'MSK', 'APL' ,'CMA-CGM' ,'YANG-MING', 'C-6', 'C-7', 'C-8' ];
   referType = ['--select--','Atmosfera Controlada', 'Cold Treatment', 'Normal', 'Super Freezer'];
   malfunctions=['--select--','116 PROBE ERRO RETURN', '117 PROBE ERROR SUPPLY RET AIR SENSOR OPEN CIRCUIT', 'PROBE ERROR', 'RETURN AIR TEMPERATURE SENSOR INVALID', 'SUPPLY AIR TEMPERATURE SENSOR 2 INVALID', 'EVAPORATOR TEMPERATURE SENSOR INVALID', 'AMBIENT TEMPERATURE SENSOR INVALID', 'SUPPLY AIR TEMPERATURE ERROR', 'COMPRESSOR SUCTION PRESSURE TRANSMITTER INVALID', 'PHASE DIRECTION NOT DETECTABLE', 'BAD POWER SUPPLY STAR COOL U/F RATIO',
@@ -66,9 +67,16 @@ export class AdminComponent implements OnInit {
     vesselIn:new FormControl('', Validators.required),
     vesselOut:new FormControl('', Validators.required),
     portOfLoading:new FormControl('', Validators.required),
-    technicianSelected:new FormControl('', Validators.required),
-  
+    technicianSelected:new FormControl('', Validators.required),  
   });
+
+
+  registerForm = new FormGroup({
+    userName: new FormControl('', [Validators.required]),
+    password:new FormControl('', Validators.required),
+    role:new FormControl('', Validators.required)
+  });
+
 
   onGoingObj:any;
   orders:any;
@@ -98,7 +106,7 @@ export class AdminComponent implements OnInit {
   }
 
 
-  ngOnInit() {   
+  ngOnInit() {
     this.fetchOrders();
     //this.fetchReports();
     this.fetchMonitoring();
@@ -256,7 +264,31 @@ export class AdminComponent implements OnInit {
     this.monitoring=true;
   }
 
+  openRegisterSuccessModal(content4) {   
+    this.modalService.open(content4, {ariaLabelledBy: 'modal-register-success'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;        
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;        
+    });
+  }
+
+  registerUser=function(content4,d){    
+    this.newUserObj = {
+      "id": Math.random().toString,
+      "userName":d.userName,
+      "password":d.password,
+      "designation":d.role     
+    }
+    console.log("obj  : ",this.newUserObj);
+    this.http.post("http://localhost:3000/users", this.newUserObj).subscribe((res:Response) => {
+      this.modalService.dismissAll('Cross click');
+      this.openRegisterSuccessModal(content4);
+    })
+  }
+
+
   
+
 
   addNewContainer = function(c) {    
     this.orderObj = {
@@ -384,6 +416,16 @@ export class AdminComponent implements OnInit {
     });
   }
 
+
+  openRegisterModal(content3) {   
+    this.modalService.open(content3, {ariaLabelledBy: 'modal-register'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;        
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;        
+    });
+  }
+
+
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
       return 'by pressing ESC';
@@ -474,5 +516,9 @@ lineColors = [
 onChartClick(event) {
   console.log(event);
 }
+
+
+
+
 
 }

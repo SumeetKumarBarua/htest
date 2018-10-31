@@ -3,11 +3,13 @@
 
     <div id="exTab1" class="container">
         <div class="row" *ngIf="!createContainer1">
-            <div class=" input-group-btn" style="margin-left: 77%">
+            <div class=" input-group-btn" style="margin-left: 65%">
                 <span>
                     <button class="btn" (click)="createContainer()">Create / View Container Cases</button>
+                    <button style="margin-left: 10px" class="btn" (click)="openRegisterModal(content3)">Register Users</button>
                 </span>
             </div>
+            <br>
 
             <div class="col-md-12">
                 <br>
@@ -52,11 +54,74 @@
             <br>
             <br>
 
+                <!-- REGISTER USERS MODAL -->
+
+                <ng-template #content3 let-modal>
+                        <form id="formNewOrder" class="form-horizontal" [formGroup]="registerForm" (ngSubmit)="registerUser(content4,registerForm.value)">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="modal-register">Register Users</h4>
+                            <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <table style="width: 100%; border-collapse: collapse; " class="table-borderless">                                
+                                <tr>
+                                    <td>UserName</td>
+                                    <td>
+                                       <input class="form-control form-inputText" type="text" formControlName="userName" required>                                       
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Password</td>
+                                    <td>
+                                        <input class="form-control form-inputText" type="password" formControlName="password" required>
+                                    </td>
+                                </tr>                                
+                                <tr>
+                                    <td>Role</td>
+                                    <td>
+                                        <select class="form-control form-inputText" formControlName="role" required>
+                                                <option *ngFor="let r of roles">{{r}}</option>
+                                        </select>                                        
+                                    </td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div class="modal-footer">                            
+                            <button style="margin-left: 34%; margin-top: 0%" class="btn btn-submit" type="submit" id="newUser" [disabled]="!registerForm.valid">
+                                    ADD USER</button>
+                        </div>
+                        </form>
+                    </ng-template>
+
+                     <!-- REGISTER SUCCESSFULL MODAL -->
+                     <ng-template #content4 let-modal>
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modal-register-success">Registered Successfully</h4>
+                                <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p>User is Registered Successfully</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-outline-dark" (click)="modal.dismiss('Cross click')">Close</button>
+                            </div>
+                    </ng-template>
+
+
 
         </div>
 
 
 
+
+
+        <!-- ************************************************************* -->
+        <!-- ************************************************************* -->
         <!-- ************************************************************* -->
 
 
@@ -95,7 +160,7 @@
                                 <div class="form-group">
                                     <label for="example-text-input" class="col-md-4">Container Number</label>
                                     <div class="col-md-8">                                        
-                                        <input class="form-control" type="text" formControlName="containerNumber" required>
+                                        <input class="form-control form-inputText" type="text" formControlName="containerNumber" required>
                                         <div class="alert alert-danger text-center" *ngIf="orderDataForm.controls.containerNumber.invalid && orderDataForm.controls.containerNumber.touched">
                                             Should comprise of 4 alphabets followed by 7 digits. eg:ASWD3213456
                                         </div>
@@ -104,7 +169,7 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Naviera</label>
                                         <div class="col-md-8">                                            
-                                            <select class="form-control" formControlName="navieraSelected" required>
+                                            <select class="form-control form-inputText" formControlName="navieraSelected" required>
                                                 <option *ngFor="let n of naviera">{{n}}</option>
                                             </select>
                                         </div>
@@ -112,7 +177,7 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Reefer Type</label>
                                         <div class="col-md-8">                                            
-                                            <select class="form-control" formControlName="referSelected" required>
+                                            <select class="form-control form-inputText" formControlName="referSelected" required>
                                                 <option *ngFor="let r of referType">{{r}}</option>
                                             </select>
                                         </div>
@@ -122,9 +187,9 @@
                                         <label for="example-text-input" class="col-md-4">Request Date</label>
                                         <div class="col-md-8 ">
                                             <div class='input-group date'>
-                                                <input class="form-control" placeholder="yyyy-mm-dd" formControlName="requestDate" ngbDatepicker #d1="ngbDatepicker">
+                                                <input class="form-control form-inputText" placeholder="yyyy-mm-dd" formControlName="requestDate" ngbDatepicker #d1="ngbDatepicker">
                                                 <div class="input-group-append">
-                                                    <button class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
+                                                    <button style="background-color: #e7f0fe" class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
                                                 </div>
                                             </div>
                                         </div>
@@ -141,7 +206,7 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Malfunction</label>
                                         <div class="col-md-8">
-                                            <select class="form-control" formControlName="malfunctionSelected" required>
+                                            <select class="form-control form-inputText" formControlName="malfunctionSelected" required>
                                                 <option *ngFor="let m of malfunctions">{{m}}</option>
                                             </select>
                                         </div>
@@ -152,7 +217,7 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Port Terminal</label>
                                         <div class="col-md-8">
-                                            <select class="form-control" formControlName="portTerminalSelected" required>
+                                            <select class="form-control form-inputText" formControlName="portTerminalSelected" required>
                                                 <option *ngFor="let p of portTerminal">{{p}}</option>
                                             </select>
                                         </div>
@@ -160,25 +225,25 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Vessel In</label>
                                         <div class="col-md-8">
-                                             <input class="form-control" type="text" formControlName="vesselIn" required>
+                                             <input class="form-control form-inputText" type="text" formControlName="vesselIn" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Vessel Out</label>
                                         <div class="col-md-8">
-                                             <input class="form-control" type="text" formControlName="vesselOut" required>
+                                             <input class="form-control form-inputText" type="text" formControlName="vesselOut" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Port Of Loading</label>
                                         <div class="col-md-8">
-                                             <input class="form-control" type="text" formControlName="portOfLoading" required>
+                                             <input class="form-control form-inputText" type="text" formControlName="portOfLoading" required>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Technician</label>
                                         <div class="col-md-8">                                            
-                                            <select class="form-control" formControlName="technicianSelected" required>
+                                            <select class="form-control form-inputText" formControlName="technicianSelected" required>
                                                 <option *ngFor="let t of technicians">{{t}}</option>
                                             </select>
                                         </div>
@@ -306,6 +371,7 @@
                             </div>
                             <br>
 
+                        
 
                             <!-- EDIT MODAL DETAILS -->
 
@@ -322,7 +388,7 @@
                                         <tr>
                                             <td style="width:33%; ">Container Number</td>
                                             <td>
-                                                <input class="form-control" type="text" name="containerNumber" id="formFields_1"
+                                                <input class="form-control form-inputText" type="text" name="containerNumber" id="formFields_1"
                                                     [(ngModel)]="EcontainerNumber" ngModel>
                                             </td>
                                         </tr>
@@ -330,7 +396,7 @@
                                             <td style="width:33%; ">Naviera</td>
                                             <td>
                                                 <form [formGroup]="editNavieraForm">
-                                                    <select class="form-control" formControlName="mNaviera">
+                                                    <select class="form-control form-inputText" formControlName="mNaviera">
                                                         <option *ngFor="let n of naviera" [ngValue]="n">{{n}}</option>
                                                     </select>
                                                 </form>
@@ -341,7 +407,7 @@
                                             <td>Reefer Type</td>
                                             <td>
                                                 <form [formGroup]="editReeferForm">
-                                                    <select class="form-control" formControlName="mReefer">
+                                                    <select class="form-control form-inputText" formControlName="mReefer">
                                                         <option *ngFor="let r of referType" [ngValue]="r">{{r}}</option>
                                                     </select>
                                                 </form>
@@ -352,9 +418,9 @@
                                             <td>
                                                 <form [formGroup]="editDateForm">
                                                     <div class='input-group date'>
-                                                        <input class="form-control" placeholder="yyyy-mm-dd" formControlName="mRequestDate" ngbDatepicker #e1="ngbDatepicker">
+                                                        <input class="form-control form-inputText" placeholder="yyyy-mm-dd" formControlName="mRequestDate" ngbDatepicker #e1="ngbDatepicker">
                                                         <div class="input-group-append">
-                                                            <button class="btn btn-outline-secondary calendar" (click)="e1.toggle()" type="button"></button>
+                                                            <button style="background-color: #e7f0fe" class="btn btn-outline-secondary calendar" (click)="e1.toggle()" type="button"></button>
                                                         </div>
                                                     </div>
                                                 </form>
@@ -372,7 +438,7 @@
                                             <td>Malfunction</td>
                                             <td>
                                                 <form [formGroup]="editMalfunctionsForm">
-                                                    <select class="form-control" formControlName="mMalfunction">
+                                                    <select class="form-control form-inputText" formControlName="mMalfunction">
                                                         <option *ngFor="let m of malfunctions" [ngValue]="m">{{m}}</option>
                                                     </select>
                                                 </form>
@@ -382,7 +448,7 @@
                                             <td>Port Terminal</td>
                                             <td>
                                                 <form [formGroup]="editPortTerminalForm">
-                                                    <select class="form-control" formControlName="mPortTerminal">
+                                                    <select class="form-control form-inputText" formControlName="mPortTerminal">
                                                         <option *ngFor="let p of portTerminal" [ngValue]="p">{{p}}</option>
                                                     </select>
                                                 </form>
@@ -391,21 +457,21 @@
                                         <tr>
                                             <td>Vessel In</td>
                                             <td>
-                                                <input class="form-control" type="text" name="naviera" id="formFields_8" [(ngModel)]="EvesselIn"
+                                                <input class="form-control form-inputText" type="text" name="naviera" id="formFields_8" [(ngModel)]="EvesselIn"
                                                     ngModel>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Vessel Out</td>
                                             <td>
-                                                <input class="form-control" type="text" name="naviera" id="formFields_9" [(ngModel)]="EvesselOut"
+                                                <input class="form-control form-inputText" type="text" name="naviera" id="formFields_9" [(ngModel)]="EvesselOut"
                                                     ngModel>
                                             </td>
                                         </tr>
                                         <tr>
                                             <td>Port of Landing</td>
                                             <td>
-                                                <input class="form-control" type="text" name="naviera" id="formFields_10" [(ngModel)]="EportOfLoading"
+                                                <input class="form-control form-inputText" type="text" name="naviera" id="formFields_10" [(ngModel)]="EportOfLoading"
                                                     ngModel>
                                             </td>
                                         </tr>
@@ -413,7 +479,7 @@
                                             <td>Technician</td>
                                             <td>
                                                 <form [formGroup]="editTechnicianForm">
-                                                    <select class="form-control" formControlName="mTechnician">
+                                                    <select class="form-control form-inputText" formControlName="mTechnician">
                                                         <option *ngFor="let t of technicians" [ngValue]="t">{{t}}</option>
                                                     </select>
                                                 </form>

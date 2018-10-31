@@ -64,6 +64,12 @@ background-position: center;
 .col-centered .form-group {
   margin: 25px 0px;
 }
+.form-control {
+  box-shadow: none;
+  border-radius: 6px;
+  background-color: #e7f0fe;
+  border:1px solid #b6d1fc;
+}
 .frm-login .form-control {
   background: transparent;
   border: 0;
@@ -74,8 +80,17 @@ background-position: center;
   font-size: 16px;
   padding: 0;
 }
+
+.form-inputText{
+  box-shadow: none;
+  border-radius: 6px;
+  background-color: #e7f0fe;
+  border:1px solid #b6d1fc;
+}
+
+
 .login-btn, .login-btn:hover {
-  background: #3751FF;
+  background: #387ed1;
   border:2px solid #ffffff;
   color: #fff;
   padding: 7px 25px;
@@ -86,13 +101,13 @@ background-position: center;
  margin-bottom: 80px;
 }
 .btn, .btn:focus {
-  background: #3751FF;
+  background: #387ed1;
   color:#fff;
   height: 36px;
 }
 .btn:hover{
   color:#fff;
-  background: #3751FF;
+  background: #387ed1;
 }
 .sub-heading {
   font-size: 12px;
@@ -119,14 +134,14 @@ ul,ol {
   margin-bottom: 30px;
 }
 .mode-active {
-  border:3px solid #3751FF !important;
+  border:3px solid #387ed1 !important;
 }
 .mode-active:after{
   content: '\2713';
   position: absolute;
   width: 25px;
   height: 25px;
-  background-color: #3751FF;
+  background-color: #387ed1;
   border-radius: 6px;
   margin-top: -62px;
   margin-left: 28px;
@@ -213,7 +228,7 @@ ul,ol {
 /* End Comman Framework */
 /*Tabs CSS*/
 .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
-  background-color: #3751FF;
+  background-color: #387ed1;
   color:#fff;
   border: 1px solid #CFD9DF;
   
@@ -251,12 +266,7 @@ ul,ol {
   color: #66757F;
 }
 
-.form-control {
-  box-shadow: none;
-  border-radius: 0;
-  background-color: #D9E7FD;
-  border:1px solid #A5B1FF;
-}
+
 input::-webkit-calendar-picker-indicator {
 display: none;
 }
@@ -280,7 +290,7 @@ display: none;
 
 }
 .input-group-addon {
-  background-color:#3751FF !important;
+  background-color:#387ed1 !important;
   border: 0 !important;
 }
 .input-group.date .dropdown-menu{
@@ -300,7 +310,7 @@ display: none;
   font-size: 12px; 
 }
 .menu-sub-tab{
-  background-color: #96A4FD;
+  background-color: #6ea0dd;
   cursor: pointer;
 }
 .menu-sub-tab li {
@@ -310,12 +320,12 @@ display: none;
   padding: 15px;
   display: inline-block;
   text-decoration: none;
-  color: #fff;
-font-size: 12px;
+  color: #000000;
+font-size: 13px;
 }
 .menu-sub-tab li a:hover,.menu-sub-active {
-  background-color: #ABB6FD;
-  
+  background-color: #2c6cba;
+  color: #ffffff;
 }
 table {
   border-collapse: collapse;
@@ -325,14 +335,14 @@ table {
 }
 
 th{
-  background-color: #F5F6FF;
+  background-color: #d6e4f5;
   font-weight: bold;
   cursor: pointer;
 }
 th, td {
   text-align: left;
   padding: 10px;
-  border:1px solid #CCD6DD;
+  border:1px solid #c1d6f0;
   border-left: 0;
 
 }
@@ -356,15 +366,15 @@ th, td {
   width: 18px;
   height: 18px;
   background: white;
-  border:2px solid #3751FF;
+  border:2px solid #387ed1;
   border-radius: 3px;
 }
 .styled-checkbox:hover + label:before {
-  background: #3751FF;
+  background: #387ed1;
 }
 
 .styled-checkbox:checked + label:before {
-  background: #3751FF;
+  background: #387ed1;
 }
 .styled-checkbox:checked + label:after {
   content: '';
