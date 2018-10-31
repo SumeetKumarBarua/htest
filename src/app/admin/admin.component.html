@@ -183,7 +183,7 @@
                                         <label for="example-text-input" class="col-md-4">Request Date</label>
                                         <div class="col-md-8 ">
                                                 <div class="input-group">
-                                                        <input class="form-control" placeholder="yyyy-mm-dd"
+                                                        <input class="form-control" style="background-color: #e7f0fe;border:1px solid #b6d1fc;" placeholder="yyyy-mm-dd"
                                                         formControlName="requestDate" ngbDatepicker #d1="ngbDatepicker">
                                                         <div class="input-group-append">
                                                           <button style="background-color: #e7f0fe" class="btn btn-outline-secondary calendar" (click)="d1.toggle()" type="button"></button>
@@ -195,7 +195,7 @@
                                         <label for="example-text-input" class="col-md-4">Request Time</label>
                                         <div class="col-md-8">
                                             <form [formGroup]="requestTimeForm">
-                                                <ngb-timepicker formControlName="reqTime" [spinners]="false"></ngb-timepicker>
+                                                <ngb-timepicker style="background-color: #e7f0fe;" formControlName="reqTime" [spinners]="false"></ngb-timepicker>
                                             </form>
                                         </div>
                                     </div>
@@ -415,7 +415,7 @@
                                             <td>
                                                 <form [formGroup]="editDateForm">
                                                     <div class="input-group">
-                                                            <input class="form-control" placeholder="yyyy-mm-dd"
+                                                            <input class="form-control" placeholder="yyyy-mm-dd" style="background-color: #e7f0fe;border:1px solid #b6d1fc;"
                                                             formControlName="mRequestDate" ngbDatepicker #e1="ngbDatepicker">
                                                             <div class="input-group-append">
                                                                 <button style="background-color: #e7f0fe" class="btn btn-outline-secondary calendar" (click)="e1.toggle()" type="button"></button>
@@ -428,7 +428,7 @@
                                             <td>Request Time</td>
                                             <td>
                                                 <form [formGroup]="editTimeForm">
-                                                    <ngb-timepicker formControlName="mRequestTime" [spinners]="false"></ngb-timepicker>
+                                                    <ngb-timepicker style="background-color: #e7f0fe;" formControlName="mRequestTime" [spinners]="false"></ngb-timepicker>
                                                 </form>
                                             </td>
                                         </tr>
