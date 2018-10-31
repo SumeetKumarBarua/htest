@@ -1,16 +1,37 @@
 <div class="navbar">
-    <div class="pull-right">
-        <div class="profile-container">
-            <figure class="notification">
-                <a  title="Notifications">
-                    <img src="/htest/assets/images/ic_notification.png" alt="">
-                </a>
-            </figure>
-            <div class="profile">
-                <img src="/htest/assets/images/user.png" alt="" class="user-profile">
+    <div class="col-md-12">
+
+        <div class="col-md-6">
+           <a href="/admin" title="Home">
+            <div class="logo">
+                <span><div class="logo"><img src="/htest/assets/images/logo.png" alt=""></div>
+                    <h2 style="margin-left: 2%;color: black; display: inline-block; font-weight:500;">HARBOUR</h2></span>
             </div>
-            <label id="userName">{{user}}</label>
-            <span id="designation">{{designation}}</span>
+           </a>
+
         </div>
+
+        <div class="col-md-6">
+            <div class="pull-right">
+                <div class="profile-container">
+                    <figure class="notification">
+                        <a title="Notifications">
+                            <img src="/htest/assets/images/ic_notification.png" alt="">
+                        </a>
+                    </figure>
+                    <div class="profile">
+                        <img src="/htest/assets/images/user.png" alt="" class="user-profile">
+                    </div>
+                    <label id="userName">{{user}}</label>
+                    <span id="designation">{{designation}}</span>
+                </div>
+            </div>
+
+        </div>
+
     </div>
+
+
+
+
 </div>

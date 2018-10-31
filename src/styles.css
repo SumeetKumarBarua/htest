@@ -12,6 +12,11 @@ body {
   height: 100%;
 }
 
+.logo{
+  display: inline;
+  margin-left: 5%;  
+}
+
 .testing1{
   background: url('/assets/images/ic_notification.png');
   
@@ -411,8 +416,7 @@ th, td {
 /* End Form CSS*/ 
 
 .pull-right{
- margin-left: 81%;
-  
+ margin-left: 81%; 
 }
 
 button.calendar, button.calendar:active {
