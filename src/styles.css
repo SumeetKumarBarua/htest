@@ -324,6 +324,7 @@ display: none;
 .menu-sub-tab{
   background-color: #6ea0dd;
   cursor: pointer;
+  margin-bottom: -1rem;
 }
 .menu-sub-tab li {
   display: inline-block;
