@@ -203,9 +203,10 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Malfunction</label>
                                         <div class="col-md-8">
-                                            <select class="form-inputText" formControlName="malfunctionSelected" required>
+                                            <input class="form-inputText" type="text" formControlName="malfunctionSelected" required>
+                                            <!-- <select class="form-inputText" formControlName="malfunctionSelected" required>
                                                 <option *ngFor="let m of malfunctions">{{m}}</option>
-                                            </select>
+                                            </select> -->
                                         </div>
                                     </div>
                                 </div>
@@ -240,8 +241,8 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Technician</label>
                                         <div class="col-md-8">                                            
-                                            <select class="form-inputText" formControlName="technicianSelected" required>
-                                                <option *ngFor="let t of technicians">{{t}}</option>
+                                            <select #selectElem (change)="setNewUser(selectElem.value)" class="form-inputText" formControlName="technicianSelected" required>
+                                                <option *ngFor="let t of technicians" [ngValue]="t.userId">{{t.userName}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -333,7 +334,7 @@
                                         </th>
                                         <th>Mode</th>
                                         <th>Edit</th>
-                                        <th>Delete</th>
+                                        <!-- <th>Delete</th> -->
                                     </tr>
                                     <tr *ngFor="let o of filteredOrders">
                                         <td>
@@ -358,11 +359,11 @@
                                                 <i class="fa fa-pencil-square-o" style="font-size:18px;" aria-hidden="true"></i>
                                             </a>
                                         </td>
-                                        <td>
+                                        <!-- <td>
                                             <a (click)="openDeleteModal(content,o)">
                                                 <i class="fa fa-trash-o" style="font-size:18px;color:red"></i>
                                             </a>
-                                        </td>
+                                        </td> -->
                                     </tr>
                                 </table>
                             </div>
@@ -436,9 +437,10 @@
                                             <td>Malfunction</td>
                                             <td>
                                                 <form [formGroup]="editMalfunctionsForm">
-                                                    <select class="form-inputText" formControlName="mMalfunction">
+                                                    <input class="form-inputText" type="text" formControlName="mMalfunction" required>
+                                                    <!-- <select class="form-inputText" formControlName="mMalfunction">
                                                         <option *ngFor="let m of malfunctions" [ngValue]="m">{{m}}</option>
-                                                    </select>
+                                                    </select> -->
                                                 </form>
                                             </td>
                                         </tr>
