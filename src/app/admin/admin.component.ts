@@ -113,7 +113,7 @@ export class AdminComponent implements OnInit {
     this.showNew = false;
     this.showInProgress = false;
     this.showReports = true;
-    //this.Pending();
+    this.Pending();
     this.ngOnInit();
   }
 
