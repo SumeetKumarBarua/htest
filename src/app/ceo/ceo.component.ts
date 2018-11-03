@@ -66,7 +66,7 @@ export class CeoComponent implements OnInit {
 
 
   fetchMonitoring = function() {
-    this.http.get("https://easy-json-server.herokuapp.com/monitoring").subscribe(
+    this.http.get("https://canaal.herokuapp.com/harbourapi/container").subscribe(
       (res: Response) => {
         this.monitoringData = res.json();
         this.filteredMonitoringData=this.monitoringData.sort(function(a, b) {

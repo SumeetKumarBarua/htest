@@ -18,7 +18,7 @@ body {
 }
 
 .testing1{
-  background: url('/assets/images/ic_notification.png');
+  background: url('./assets/images/ic_notification.png');
   
 }
 .testing2{
@@ -353,6 +353,7 @@ table {
   border-spacing: 0;
   width: 100%;
   font-size: 12px;
+  border-left:solid 1px #c1d6f0;
 }
 
 th{

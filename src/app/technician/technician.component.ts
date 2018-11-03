@@ -21,6 +21,7 @@ export class TechnicianComponent implements OnInit {
   filteredMonitoringData: IMonitoring[] = [];
   monitoring:any;
   orders:any;
+  reports:any;
   monitoringData:any;
   sortType='createdOn';
   sortReverse=false;
@@ -28,7 +29,7 @@ export class TechnicianComponent implements OnInit {
 
   results = [];
   fetchOrders = function() {
-    this.http.get("https://easy-json-server.herokuapp.com/orders").subscribe(
+    this.http.get("https://canaal.herokuapp.com/harbourapi/container/status/Pending").subscribe(
       (res: Response) => {
         this.orders = this.filteredOrders = res.json();
         
@@ -37,7 +38,7 @@ export class TechnicianComponent implements OnInit {
   }
 
   fetchMonitoring = function() {
-    this.http.get("https://easy-json-server.herokuapp.com/monitoring").subscribe(
+    this.http.get("https://canaal.herokuapp.com/harbourapi/container/status/Ongoing").subscribe(
       (res: Response) => {
         this.monitoring = this.monitoringData = res.json();
       }
@@ -45,7 +46,7 @@ export class TechnicianComponent implements OnInit {
   }
 
   fetchReports = function() {
-    this.http.get("https://easy-json-server.herokuapp.com/reports").subscribe(
+    this.http.get("https://canaal.herokuapp.com/harbourapi/container").subscribe(
       (res: Response) => {
         this.reports = res.json();
       }
@@ -92,7 +93,7 @@ export class TechnicianComponent implements OnInit {
   ngOnInit() {
     this.fetchOrders();
     this.fetchMonitoring();
-    //this.fetchReports();
+    this.fetchReports();
   }
 
   Pending=function(){

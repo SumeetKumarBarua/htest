@@ -4,7 +4,7 @@ import { SorterService } from '../core/services/sorter.service';
 import { FilterService } from '../core/services/filter.service';
 import { IOrders, IMonitoring } from '../shared/interfaces';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, FormBuilder, FormArray, Validators } from '@angular/forms';
 import { CustomValidators } from './customValidators';
 import { NgbActiveModal, NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 
@@ -29,7 +29,7 @@ export class AdminComponent implements OnInit {
   portTerminal = ['--select--', 'PPC', 'BLB', 'PPC', 'CRT', 'PSA', 'MIT', 'VACAMONTE', 'CCT', 'CP1-CARNES DE COCLE', 'CP2- ZANGUENGA', 'RESCATE'];
   optionSelected: any;
   filteredOrders: IOrders[] = [];
-  filteredMonitoringData: IMonitoring[] = [];
+  filteredOngoingData: IMonitoring[] = [];
   showDeleteModal = false;
   sortType = 'createdOn';
   sortReverse = false;
@@ -47,10 +47,15 @@ export class AdminComponent implements OnInit {
   cnum = '';
   toBeDeleted = '';
   toBeEdited = '';
-  baseUrl = "http://localhost:3000"; //https://easy-json-server.herokuapp.com
+  baseUrl = "https://canaal.herokuapp.com/harbourapi";
+
+  //http://localhost:3000
+  //https://canaal.herokuapp.com/harbourapi/user
+  //https://easy-json-server.herokuapp.com
 
   constructor(private http: Http, private sorterService: SorterService,
-    private filterService: FilterService, private modalService: NgbModal) { }
+    private filterService: FilterService, private modalService: NgbModal,
+    private fb: FormBuilder) { }
 
   requestTime = { hour: 0, minute: 0 };
   requestTimeForm = new FormGroup({
@@ -71,6 +76,9 @@ export class AdminComponent implements OnInit {
     technicianSelected: new FormControl('', Validators.required),
   });
 
+  myCheckboxForm= new FormGroup({
+    containers: this.fb.array([])
+  });
 
   registerForm = new FormGroup({
     userName: new FormControl('', [Validators.required]),
@@ -85,6 +93,8 @@ export class AdminComponent implements OnInit {
   results = [];
 
   displayNew = function () {
+    this.orderDataForm.reset();
+    this.isAddedTech = false;
     this.requestTimeForm.controls['reqTime'].setValue(this.requestTime, { onlySelf: true });
     this.showNew = true;
     this.showInProgress = false;
@@ -99,6 +109,7 @@ export class AdminComponent implements OnInit {
   }
 
   displayReports = function () {
+    this.isAddedTech = false;
     this.showNew = false;
     this.showInProgress = false;
     this.showReports = true;
@@ -109,7 +120,7 @@ export class AdminComponent implements OnInit {
 
   ngOnInit() {
     this.fetchOrders();
-    //this.fetchReports();
+    this.fetchReports();
     this.fetchMonitoring();
     this.clearData();
     this.fetchUsers();
@@ -145,10 +156,10 @@ export class AdminComponent implements OnInit {
       if (data && this.monitoringData) {
         data = data.toUpperCase();
         const props = ['containerNumber', 'naviera', 'referType', 'malfunction', 'portTerminal', 'requestTime', 'portOfLoading', 'technician'];
-        this.filteredMonitoringData = this.filterService.filter<IMonitoring>(this.monitoringData, data, props);
+        this.filteredOngoingData = this.filterService.filter<IMonitoring>(this.monitoringData, data, props);
         //console.log(this.filteredOrders);
       } else {
-        this.filteredMonitoringData = this.monitoringData;
+        this.filteredOngoingData = this.monitoringData;
       }
     }
 
@@ -156,10 +167,10 @@ export class AdminComponent implements OnInit {
       if (data && this.monitoringData) {
         data = data.toUpperCase();
         const props = ['containerNumber', 'naviera', 'referType', 'malfunction', 'portTerminal', 'requestTime', 'portOfLoading', 'technician'];
-        this.filteredMonitoringData = this.filterService.filter<IMonitoring>(this.monitoringData, data, props);
+        this.filteredOngoingData = this.filterService.filter<IMonitoring>(this.monitoringData, data, props);
         //console.log(this.filteredOrders);
       } else {
-        this.filteredMonitoringData = this.monitoringData;
+        this.filteredOngoingData = this.monitoringData;
       }
     }
 
@@ -167,7 +178,7 @@ export class AdminComponent implements OnInit {
 
 
   fetchUsers  =  function () {
-    this.http.get(this.baseUrl + "/users").subscribe(
+    this.http.get(this.baseUrl + "/user").subscribe(
       (res:  Response)  =>  {
         this.technicians  =  res.json();
       }
@@ -176,7 +187,7 @@ export class AdminComponent implements OnInit {
 
 
   fetchOrders = function () {
-    this.http.get(this.baseUrl + "/orders").subscribe(
+    this.http.get(this.baseUrl + "/container/status/Pending").subscribe(
       (res: Response) => {
         this.orders = res.json();
         // sort by created on
@@ -196,10 +207,10 @@ export class AdminComponent implements OnInit {
   }
 
   fetchMonitoring = function () {
-    this.http.get(this.baseUrl + "/monitoring").subscribe(
+    this.http.get(this.baseUrl + "/container/status/Ongoing").subscribe(
       (res: Response) => {
         this.monitoringData = res.json();
-        this.filteredMonitoringData = this.monitoringData.sort(function (a, b) {
+        this.filteredOngoingData = this.monitoringData.sort(function (a, b) {
           var createdOnA = a.createdOn; // ignore upper and lowercase
           var createdOnB = b.createdOn; // ignore upper and lowercase
           if (createdOnA < createdOnB) {
@@ -215,16 +226,16 @@ export class AdminComponent implements OnInit {
   }
 
   fetchReports = function () {
-    this.http.get(this.baseUrl + "/reports").subscribe(
+    this.http.get(this.baseUrl+"/container").subscribe(
       (res: Response) => {
-        this.reports = res.json();
+        this.reports =  res.json();
       }
     )
   }
 
   deleteContainer() {
     console.log("--->", this.toBeDeleted);
-    const url = `${this.baseUrl + "/orders"}/${this.toBeDeleted}`;
+    const url = `${this.baseUrl + "/container"}/${this.toBeDeleted}`;
     return this.http.delete(url, { headers: this.headers }).toPromise()
       .then(() => {
         this.ngOnInit();
@@ -238,15 +249,32 @@ export class AdminComponent implements OnInit {
     this.createContainer1 = true;
   }
 
+  checkOneLength:number;
+  checkOneByOne = function (id: string, isChecked: boolean) {
+    const idFormArray = <FormArray>this.myCheckboxForm.controls.containers;
+    if (isChecked) {
+      idFormArray.push(new FormControl(id));
+    } else {
+      let index = idFormArray.controls.findIndex(x => x.value == id)
+      idFormArray.removeAt(index);
+    }
+    this.onGoingObj = this.myCheckboxForm.value;
+    this.checkOneLength=idFormArray.length;    
+    
+  }
+
+
   assignTechnician = function () {
-    console.log("ongoingobj  : ", this.onGoingObj);
-    this.http.post(this.baseUrl + "/monitoring", this.onGoingObj).subscribe((res: Response) => {
+    console.log("ongoingobj  : ", JSON.stringify(this.onGoingObj));
+      this.http.post(this.baseUrl + "/assign", this.onGoingObj).subscribe((res: Response) => {
       this.isAddedTech = true;
+      this.ngOnInit();
+      this.onGoingObj='';
     },
       (res: Response) => {
         this.isAddedTech = false;
         this.cannotMove = true;
-      })
+      }) 
   }
 
 
@@ -291,7 +319,7 @@ export class AdminComponent implements OnInit {
       "designation": d.role
     }
     console.log("obj  : ", this.newUserObj);
-    this.http.post(this.baseUrl + "/users", this.newUserObj).subscribe((res: Response) => {
+    this.http.post(this.baseUrl + "/user", this.newUserObj).subscribe((res: Response) => {
       this.modalService.dismissAll('Cross click');
       this.openRegisterSuccessModal(content4);
     })
@@ -302,6 +330,15 @@ export class AdminComponent implements OnInit {
 
 
   addNewContainer = function (c) {
+    let rDate=''; let rTime='';
+    let day=''; let month=''; let year=''; let minutes=''; let hours=''; let seconds='';
+    day=c.requestDate.day; month=c.requestDate.month; year=c.requestDate.year;
+    minutes=this.requestTimeForm.controls.reqTime.value.minute;
+    hours=this.requestTimeForm.controls.reqTime.value.hour;
+    seconds=this.requestTimeForm.controls.reqTime.value.second;
+    rDate=day+"/"+month+"/"+year;
+    rTime=hours+":"+minutes
+
     this.orderObj = {
       "id": Math.random().toString,
       "containerNumber": c.containerNumber,
@@ -309,38 +346,23 @@ export class AdminComponent implements OnInit {
       "referType": c.referSelected,
       "malfunction": c.malfunctionSelected,
       "portTerminal": c.portTerminalSelected,
-      "requestDate": c.requestDate, //c.requestDate 23/09/2018
-      "requestTime": this.requestTimeForm.controls.reqTime.value, //c.requestTime
+      "requestDate":  rDate,//c.requestDate, //c.requestDate 23/09/2018
+      "requestTime": rTime, //this.requestTimeForm.controls.reqTime.value, //c.requestTime
       "vesselIn": c.vesselIn,
       "vesselOut": c.vesselOut,
       "portOfLoading": c.portOfLoading,
-      "technician": c.technicianSelected,
-      "userId":this.userId,
+      "technician": c.technicianSelected.userName,
+      "userId":c.technicianSelected.userId,
       "createdOn": new Date().getTime()
-    }
-    console.log("name :"+c.t);
-    console.log("nww :"+this.t);
-    console.log("obj  : ", this.orderObj);
-    /* this.http.post(this.baseUrl + "/orders", this.orderObj).subscribe((res: Response) => {
+    }    
+    console.log("nww :"+JSON.stringify(this.orderObj));   
+      this.http.post(this.baseUrl + "/container", this.orderObj).subscribe((res: Response) => {
       this.isAdded = true;
-    }) */
+      this.orderDataForm.reset();
+      this.requestTimeForm.reset();
+    })
   }
-
-userId:String="";
-
-setNewUser(id): void {
-    this.userId=id;    
-    console.log("id : "+this.userId);    
-}
-
-onInputTechnician(value) { 
-  console.log("d "+value);
-  } 
-
-  checkOneByOne = function (o) {
-    this.onGoingObj = o;
-  }
-
+ 
 
   openDeleteModal(content, o) {
     this.cnum = o.containerNumber;
@@ -354,7 +376,19 @@ onInputTechnician(value) { 
 
 
   updateContainer = function (content2) {
-    //console.log("data : "+this.editNavieraForm.controls.mNaviera.value)
+    //console.log("data : "+JSON.stringify(this.editDateForm.controls.mRequestDate.value));
+    let d=this.editDateForm.controls.mRequestDate.value;
+    let t=this.editTimeForm.controls.mRequestTime.value;
+    let rDate=''; let rTime='';
+    let day=''; let month=''; let year=''; let minutes=''; let hours=''; let seconds='';
+
+    day=d.day; month=d.month; year=d.year;
+    minutes=t.minute;
+    hours=t.hour;
+    seconds=t.second;
+    rDate=day+"/"+month+"/"+year;
+    rTime=hours+":"+minutes;
+   
     this.orderObj = {
       "id": this.toBeEdited,
       "containerNumber": this.EcontainerNumber,
@@ -362,27 +396,44 @@ onInputTechnician(value) { 
       "referType": this.editReeferForm.controls.mReefer.value,
       "malfunction": this.editMalfunctionsForm.controls.mMalfunction.value,
       "portTerminal": this.editPortTerminalForm.controls.mPortTerminal.value,
-      "requestDate": this.editDateForm.controls.mRequestDate.value, //c.requestDate 23/09/2018
-      "requestTime": this.editTimeForm.controls.mRequestTime.value, //c.requestTime 12:20
+      "requestDate": rDate,  //this.editDateForm.controls.mRequestDate.value, //c.requestDate 23/09/2018
+      "requestTime": rTime, //this.editTimeForm.controls.mRequestTime.value, //c.requestTime 12:20
       "vesselIn": this.EvesselIn,
       "vesselOut": this.EvesselOut,
       "portOfLoading": this.EportOfLoading,
-      "technician": this.editTechnicianForm.controls.mTechnician.value,
+      "userId":this.editTechnicianForm.controls.mTechnician.value.userId,
+      "technician": this.editTechnicianForm.controls.mTechnician.value.userName,
       "createdOn": new Date().getTime()
     }
-    //console.log("con obj  : ",this.orderObj);
-    const url = `${this.baseUrl + "/orders"}/${this.toBeEdited}`;
+    console.log("con obj  : ",this.orderObj);
+     const url = `${this.baseUrl + "/container"}/${this.toBeEdited}`;
     this.http.put(url, JSON.stringify(this.orderObj), { headers: this.headers })
       .toPromise()
       .then(() => {
         this.ngOnInit();
         this.modalService.dismissAll('Cross click');
         this.openEditSuccessModal(content2);
-      })
+      }) 
   }
 
 
+
   openEditModal = function (content1, o) {
+    //console.log("data :"+JSON.stringify(o))
+    let date=o.requestDate.split("/");    
+    let requestDate={
+      "year":parseInt(date[2]),
+      "month":parseInt(date[1]),
+      "day":parseInt(date[0]),
+    };
+
+    let time=o.requestTime.split(":");
+    let requestTime={
+      "hour":parseInt(time[0]),
+      "minute":parseInt(time[1]),
+      "second":0
+    };
+
     this.editNavieraForm = new FormGroup({
       mNaviera: new FormControl()
     });
@@ -410,8 +461,8 @@ onInputTechnician(value) { 
     this.editMalfunctionsForm.controls['mMalfunction'].setValue(o.malfunction, { onlySelf: true });
     this.editPortTerminalForm.controls['mPortTerminal'].setValue(o.portTerminal, { onlySelf: true });
     this.editTechnicianForm.controls['mTechnician'].setValue(o.technician, { onlySelf: true });
-    this.editDateForm.controls['mRequestDate'].setValue(o.requestDate, { onlySelf: true });
-    this.editTimeForm.controls['mRequestTime'].setValue(o.requestTime, { onlySelf: true });
+    this.editDateForm.controls['mRequestDate'].setValue(requestDate, { onlySelf: true });
+    this.editTimeForm.controls['mRequestTime'].setValue(requestTime, { onlySelf: true });
 
     this.toBeEdited = o.id;
     this.EcontainerNumber = o.containerNumber
@@ -424,7 +475,6 @@ onInputTechnician(value) { 
     this.EvesselIn = o.vesselIn
     this.EvesselOut = o.vesselOut
     this.EportOfLoading = o.portOfLoading
-    this.Etechnician = o.technician
 
     this.modalService.open(content1, { ariaLabelledBy: 'modal-edit' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
@@ -463,7 +513,7 @@ onInputTechnician(value) { 
 
 
 
-  clearData = function () {
+  clearData = function () {    
     this.isAdded = false;
     /* this.isAddedTech=false;
     this.ongoing=false;

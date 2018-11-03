@@ -11,7 +11,7 @@
             </div>
             <br>
 
-            <div class="col-md-12">
+            <div class="col-md-12 col-xs-12">
                 <br>
                 <div class="col-md-5">
                     <div class="">
@@ -56,7 +56,7 @@
 
                 <!-- REGISTER USERS MODAL -->
 
-                <ng-template #content3 let-modal>
+                <ng-template #content3 let-modal class="col-md-12 col-xs-12 col-sm-12">
                         <form id="formNewOrder" class="form-horizontal" [formGroup]="registerForm" (ngSubmit)="registerUser(content4,registerForm.value)">
                         <div class="modal-header">
                             <h4 class="modal-title" id="modal-register">Register Users</h4>
@@ -97,7 +97,7 @@
                     </ng-template>
 
                      <!-- REGISTER SUCCESSFULL MODAL -->
-                     <ng-template #content4 let-modal>
+                     <ng-template #content4 let-modal class="col-md-12 col-xs-12 col-sm-12">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="modal-register-success">Registered Successfully</h4>
                                 <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
@@ -241,8 +241,8 @@
                                     <div class="form-group">
                                         <label for="example-text-input" class="col-md-4">Technician</label>
                                         <div class="col-md-8">                                            
-                                            <select #selectElem (change)="setNewUser(selectElem.value)" class="form-inputText" formControlName="technicianSelected" required>
-                                                <option *ngFor="let t of technicians" [ngValue]="t.userId">{{t.userName}}</option>
+                                            <select class="form-inputText" formControlName="technicianSelected" required>                                                
+                                                <option *ngFor="let t of technicians" [ngValue]="t">{{t.userName}}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -281,7 +281,8 @@
                                 <table style="width:100%; " class="table table-striped table-hover">
                                     <tr>
                                         <th>
-                                            <input type="checkbox" name="checkAll" value="check1">
+                                            Select
+                                            <!-- <input type="checkbox" name="checkAll" value="check1"> -->
                                         </th>
                                         <th sortBy="containerNumber" (sorted)="sort($event)">Container Number
                                             <span [hidden]="!(sortType == 'containerNumber' && !sortReverse)" class="fa fa-caret-down"></span>
@@ -334,19 +335,22 @@
                                         </th>
                                         <th>Mode</th>
                                         <th>Edit</th>
-                                        <!-- <th>Delete</th> -->
+                                        <th>Delete</th>
                                     </tr>
                                     <tr *ngFor="let o of filteredOrders">
                                         <td>
-                                            <input type="checkbox" (click)="checkOneByOne(o)" name="checkOne" value="check2">
+                                        <form [formGroup]="myCheckboxForm">                                                
+                                           <input type="checkbox" (change)="checkOneByOne(o.containerNumber, $event.target.checked)">                                                
+                                        </form>
+                                            <!-- <input type="checkbox" (click)="checkOneByOne(o)" name="checkOne" value="check2"> -->
                                         </td>
                                         <td>{{o.containerNumber}}</td>
                                         <td>{{o.naviera}}</td>
                                         <td>{{o.referType}}</td>
                                         <td>{{o.malfunction}}</td>
                                         <td>{{o.portTerminal}}</td>
-                                        <td>{{o.requestDate.day}}/{{o.requestDate.month}}/{{o.requestDate.year}}</td>
-                                        <td>{{o.requestTime.hour}}:{{o.requestTime.minute}}</td>
+                                        <td>{{o.requestDate}}</td>
+                                        <td>{{o.requestTime}}</td>
                                         <td>{{o.vesselIn}}</td>
                                         <td>{{o.vesselOut}}</td>
                                         <td>{{o.portOfLoading}}</td>
@@ -359,16 +363,16 @@
                                                 <i class="fa fa-pencil-square-o" style="font-size:18px;" aria-hidden="true"></i>
                                             </a>
                                         </td>
-                                        <!-- <td>
+                                        <td>
                                             <a (click)="openDeleteModal(content,o)">
                                                 <i class="fa fa-trash-o" style="font-size:18px;color:red"></i>
                                             </a>
-                                        </td> -->
+                                        </td>
                                     </tr>
                                 </table>
                             </div>
                             <br>
-
+                            <!-- <pre>Form values: {{myCheckboxForm.value | json}}</pre> -->
                         
 
                             <!-- EDIT MODAL DETAILS -->
@@ -382,7 +386,7 @@
                                 </div>
                                 <div class="modal-body">
 
-                                    <table style="width: 100%; border-collapse: collapse; " class="table-borderless">
+                                    <table style="width: 100%; border-collapse: collapse; border-left-color: #ffffff" class="table-borderless">
                                         <tr>
                                             <td style="width:33%; ">Container Number</td>
                                             <td>
@@ -480,7 +484,7 @@
                                             <td>
                                                 <form [formGroup]="editTechnicianForm">
                                                     <select class="form-inputText" formControlName="mTechnician">
-                                                        <option *ngFor="let t of technicians" [ngValue]="t">{{t}}</option>
+                                                        <option *ngFor="let t of technicians" [ngValue]="t">{{t.userName}}</option>
                                                     </select>
                                                 </form>
                                             </td>
@@ -489,7 +493,7 @@
 
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-dark" (click)="updateContainer(content2)">Ok</button>
+                                    <button type="button" style="margin-top: 0%" class="btn btn-submit" (click)="updateContainer(content2)">Ok</button>
                                 </div>
 
                             </ng-template>
@@ -523,36 +527,35 @@
                                 </div>
                                 <div class="modal-body">
                                     <p>
-                                        <strong>Are you sure you want to delete container number
-                                            <span class="text-primary"> {{cnum}} </span> ?</strong>
+                                        <strong><i class="fa fa-exclamation-triangle" style="font-size:20px;color:red"></i>&nbsp;
+                                            Do you want to delete container number "
+                                            <span class="text-primary"> {{cnum}} </span>" ?</strong>
                                     </p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-outline-dark" (click)="deleteContainer()">Ok</button>
+                                    <button type="button" style="margin-top: 0%" class="btn btn-submit" (click)="deleteContainer()">Ok</button>
                                 </div>
                             </ng-template>
-
-
-
+                    
 
                             <div class="alert alert-success text-center" *ngIf="isAddedTech">
                                 Technicians assigned successfully
                             </div>
                             <div class="alert alert-danger text-center" *ngIf="cannotMove">
-                                Technicians already assigned
+                                Technicians cannot be assigned
                             </div>
                             <br>
-
+            <!-- <pre>{{checkOneLength}}</pre> -->
                             <div class=" input-group-btn">
                                 <span>
-                                    <button type="button" class="btn btn-primary" (click)="assignTechnician()">Assign containers to technicians</button>
+                                    <button type="button" [disabled]="!checkOneLength" class="btn btn-primary" (click)="assignTechnician()">Assign containers to technicians</button>
                                 </span>
                             </div>
                         </div>
 
                         <div *ngIf="ongoing">
                             <div style="overflow-x:auto;">
-                                <table class="table table-hover" style="width:100%; ">
+                                <table class="table table-striped table-hover" style="width:100%; ">
                                     <tr>
                                         <th>
                                             <input type="checkbox" name="checkAll" value="check1">
@@ -592,16 +595,16 @@
 
 
                                     </tr>
-                                    <tr *ngFor="let m of filteredMonitoringData">
+                                    <tr *ngFor="let m of filteredOngoingData">
                                         <td>
                                             <input type="checkbox" name="checkOneByOne" value="check2">
                                         </td>
                                         <td>{{m.containerNumber}}</td>
-                                        <td>{{m.naviera}}</td>
+                                        <td>{{m.portTerminal}}</td>
                                         <!-- <td>Email</td>
                                     <td>Admin</td> -->
-                                        <td>{{m.requestDate.day}}/{{m.requestDate.month}}/{{m.requestDate.year}}</td>
-                                        <td>{{m.requestTime.hour}}:{{m.requestTime.minute}}</td>
+                                        <td>{{m.requestDate}}</td>
+                                        <td>{{m.requestTime}}</td>
                                         <td>{{m.technician}}</td>
                                         <td></td>
                                         <td></td>
@@ -639,7 +642,7 @@
                         <filter-textbox (changed)="filterChanged($event)"></filter-textbox>
                         <br>
                         <div style="overflow-x:auto;">
-                            <table class="table table-hover" style="width:100%">
+                            <table class="table table-striped table-hover" style="width:100%">
                                 <tr>
                                     <th>
                                         <input type="checkbox" name="checkAll" value="check1">
@@ -679,7 +682,7 @@
 
 
                                 </tr>
-                                <tr *ngFor="let m of filteredMonitoringData">
+                                <tr *ngFor="let m of reports">
                                     <td>
                                         <input type="checkbox" name="checkOneByOne" value="check2">
                                     </td>
@@ -687,8 +690,8 @@
                                     <td>{{m.naviera}}</td>
                                     <td>Email</td>
                                     <td>Admin</td>
-                                    <td>{{m.requestDate.day}}/{{m.requestDate.month}}/{{m.requestDate.year}}</td>
-                                    <td>{{m.requestTime.hour}}:{{m.requestTime.minute}}</td>
+                                    <td>{{m.requestDate}}</td>
+                                    <td>{{m.requestTime}}</td>
                                     <td>{{m.technician}}</td>
                                     <td></td>
                                     <td></td>
@@ -708,8 +711,6 @@
                     </div>
 
                 </div>
-
-                <!-- <button class="btn btn-submit" type="submit" id="btnMonitor">Select Records which needs Monitoring</button> -->
 
             </div>
         </div>

@@ -58,12 +58,14 @@
 
 
         <!-- ************************************************************* -->
+         <!-- ************************************************************* -->
+          <!-- ************************************************************* -->
 
 
 
         <div *ngIf="viewReport">
             <ul class="nav nav-pills">  
-                <li>              
+                <li class="active">              
                     <a (click)="displayReports()" id="btnReport" data-toggle="tab">Reports</a>
                 </li>
             </ul>
@@ -75,11 +77,11 @@
                         <filter-textbox (changed)="filterChanged($event)"></filter-textbox>
                         <br>   
                     <div style="overflow-x:auto;">
-                            <table class="table table-hover" style="width:100%">
+                            <table class="table table-striped table-hover" style="width:100%">
                                     <tr>
-                                        <th>
+                                        <!-- <th>
                                             <input type="checkbox" name="checkAll" value="check1">
-                                        </th>                                    
+                                        </th>   -->                                  
                                         <th sortBy="containerNumber" (sorted)="sort($event)">Container Number
                                                 <span  [hidden]="!(sortType == 'containerNumber' && !sortReverse)" class="fa fa-caret-down"></span>
                                                 <span [hidden]="!(sortType == 'containerNumber' && sortReverse)" class="fa fa-caret-up"></span>
@@ -90,6 +92,10 @@
                                         </th>
                                         <th>Mode of creation</th>
                                         <th>Created by</th>
+                                        <th sortBy="requestDate" (sorted)="sort($event)">Created On
+                                                <span  [hidden]="!(sortType == 'createdOn' && !sortReverse)" class="fa fa-caret-down"></span>
+                                                <span [hidden]="!(sortType == 'createdOn' && sortReverse)" class="fa fa-caret-up"></span>
+                                        </th>
                                         <th sortBy="requestDate" (sorted)="sort($event)">Request date
                                                 <span  [hidden]="!(sortType == 'requestDate' && !sortReverse)" class="fa fa-caret-down"></span>
                                                 <span [hidden]="!(sortType == 'requestDate' && sortReverse)" class="fa fa-caret-up"></span>
@@ -116,15 +122,16 @@
                                                             
                                     </tr>
                                     <tr *ngFor="let m of filteredMonitoringData">
-                                        <td>
+                                        <!-- <td>
                                             <input type="checkbox" name="checkOneByOne" value="check2">
-                                        </td>
+                                        </td> -->
                                         <td>{{m.containerNumber}}</td>
-                                        <td>{{m.naviera}}</td>
+                                        <td>{{m.portTerminal}}</td>
                                         <td>Email</td>
                                         <td>Admin</td>
-                                        <td>{{m.requestDate.day}}/{{m.requestDate.month}}/{{m.requestDate.year}}</td>
-                                        <td>{{m.requestTime.hour}}:{{m.requestTime.minute}}</td>
+                                        <td>{{m.createdOn | date:'MMM d, y h:mm'}}</td>
+                                        <td>{{m.requestDate}}</td>
+                                        <td>{{m.requestTime}}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>

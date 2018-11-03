@@ -3,6 +3,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgModule, Component } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
+import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { ClarityModule } from '@clr/angular';
 import { UiModule } from './ui/ui.module';
@@ -61,7 +62,8 @@ const appRoutes:Routes=[
     ChartsModule,
     UiModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes),
+    CommonModule,
+    RouterModule.forRoot(appRoutes,{useHash:true}),
     HttpModule,
     BrowserAnimationsModule,
     ReactiveFormsModule
