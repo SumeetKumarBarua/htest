@@ -275,6 +275,10 @@
                             <li id="monitoring">
                                 <a>Monitoring</a>
                             </li>
+
+                            <li style="float: right!important;">
+                                <a (click)="ngOnInit()"><i class="fa fa-refresh" style="font-size:16px; color: #ffffff"></i></a>
+                            </li>
                         </ul>
                         <div *ngIf="pending">
                             <div style="overflow-x:auto;">
@@ -558,7 +562,7 @@
                                 <table class="table table-striped table-hover" style="width:100%; ">
                                     <tr>
                                         <th>
-                                            <input type="checkbox" name="checkAll" value="check1">
+                                            Select
                                         </th>
                                         <th sortBy="containerNumber" (sorted)="sort($event)">Container Number
                                             <span [hidden]="!(sortType == 'containerNumber' && !sortReverse)" class="fa fa-caret-down"></span>
@@ -606,11 +610,11 @@
                                         <td>{{m.requestDate}}</td>
                                         <td>{{m.requestTime}}</td>
                                         <td>{{m.technician}}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td><i class="fa fa-check" [hidden]="!m.technicianAccepted" aria-hidden="true" style="color: #6cc15d; font-size: 16px; padding-left: 20px"></i></td>
+                                        <td><i class="fa fa-check" [hidden]="!m.technicianFinished" aria-hidden="true" style="color: #6cc15d; font-size: 16px; padding-left: 20px"></i></td>
+                                        <td>{{m.repairDate}}</td>
+                                        <td>{{m.repairTime}}</td>
+                                        <td>{{m.technicianStatus}}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -644,9 +648,9 @@
                         <div style="overflow-x:auto;">
                             <table class="table table-striped table-hover" style="width:100%">
                                 <tr>
-                                    <th>
+                                    <!-- <th>
                                         <input type="checkbox" name="checkAll" value="check1">
-                                    </th>
+                                    </th> -->
                                     <th sortBy="containerNumber" (sorted)="sort($event)">Container Number
                                         <span [hidden]="!(sortType == 'containerNumber' && !sortReverse)" class="fa fa-caret-down"></span>
                                         <span [hidden]="!(sortType == 'containerNumber' && sortReverse)" class="fa fa-caret-up"></span>
@@ -683,9 +687,9 @@
 
                                 </tr>
                                 <tr *ngFor="let m of reports">
-                                    <td>
+                                    <!-- <td>
                                         <input type="checkbox" name="checkOneByOne" value="check2">
-                                    </td>
+                                    </td> -->
                                     <td>{{m.containerNumber}}</td>
                                     <td>{{m.naviera}}</td>
                                     <td>Email</td>
@@ -693,16 +697,17 @@
                                     <td>{{m.requestDate}}</td>
                                     <td>{{m.requestTime}}</td>
                                     <td>{{m.technician}}</td>
+                                        <td><i class="fa fa-check" [hidden]="!m.technicianAccepted" aria-hidden="true" style="color: #6cc15d; font-size: 16px; padding-left: 20px"></i></td>
+                                        <td><i class="fa fa-check" [hidden]="!m.technicianFinished" aria-hidden="true" style="color: #6cc15d; font-size: 16px; padding-left: 20px"></i></td>
+                                        <td>{{m.repairDate}}</td>
+                                        <td>{{m.repairTime}}</td>
+                                        <td>{{m.technicianStatus}}</td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    
 
                                 </tr>
 

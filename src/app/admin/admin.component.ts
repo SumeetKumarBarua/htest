@@ -99,6 +99,10 @@ export class AdminComponent implements OnInit {
     this.showNew = true;
     this.showInProgress = false;
     this.showReports = false;
+    document.getElementById("ongoing").classList.remove('menu-sub-active');
+    document.getElementById("pending").classList.add('menu-sub-active');
+    this.pending = true;
+    this.ongoing = false;
   }
 
   displayInProgress = function () {
@@ -115,6 +119,27 @@ export class AdminComponent implements OnInit {
     this.showReports = true;
     this.Pending();
     this.ngOnInit();
+  }
+
+  Pending = function () {
+    document.getElementById("ongoing").classList.remove('menu-sub-active');
+    document.getElementById("pending").classList.add('menu-sub-active');
+    this.pending = true;
+    this.ongoing = false;
+    this.ngOnInit();
+  }
+
+  onGoing = function () {
+    document.getElementById("pending").classList.remove('menu-sub-active');
+    document.getElementById("ongoing").classList.add('menu-sub-active');
+    this.ongoing = true;
+    this.pending = false;
+    this.isAddedTech = false;
+    this.ngOnInit();
+  }
+
+  Monitoring = function () {
+    this.monitoring = true;
   }
 
 
@@ -282,27 +307,7 @@ export class AdminComponent implements OnInit {
     this.isAddedMonitor = true;
   }
 
-  Pending = function () {
-    document.getElementById("ongoing").classList.remove('menu-sub-active');
-    document.getElementById("pending").classList.add('menu-sub-active');
-    this.pending = true;
-    this.ongoing = false;
-    this.ngOnInit();
-  }
-
-  onGoing = function () {
-    document.getElementById("pending").classList.remove('menu-sub-active');
-    document.getElementById("ongoing").classList.add('menu-sub-active');
-    this.ongoing = true;
-    this.pending = false;
-    this.isAddedTech = false;
-    this.ngOnInit();
-  }
-
-  Monitoring = function () {
-    this.monitoring = true;
-  }
-
+  
   openRegisterSuccessModal(content4) {
     this.modalService.open(content4, { ariaLabelledBy: 'modal-register-success' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;

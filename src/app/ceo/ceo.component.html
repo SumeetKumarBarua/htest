@@ -132,12 +132,12 @@
                                         <td>{{m.createdOn | date:'MMM d, y h:mm'}}</td>
                                         <td>{{m.requestDate}}</td>
                                         <td>{{m.requestTime}}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{m.technician}}</td>
+                                        <td><i class="fa fa-check" [hidden]="!m.technicianAccepted" aria-hidden="true" style="color: #6cc15d; font-size: 16px; padding-left: 20px"></i></td>
+                                        <td><i class="fa fa-check" [hidden]="!m.technicianFinished" aria-hidden="true" style="color: #6cc15d; font-size: 16px; padding-left: 20px"></i></td>
+                                        <td>{{m.repairDate}}</td>
+                                        <td>{{m.repairTime}}</td>
+                                        <td>{{m.technicianStatus}}</td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
