@@ -408,17 +408,24 @@ export class AdminComponent implements OnInit {
       "portOfLoading": this.EportOfLoading,
       "userId":this.editTechnicianForm.controls.mTechnician.value.userId,
       "technician": this.editTechnicianForm.controls.mTechnician.value.userName,
-      "createdOn": new Date().getTime()
+      "createdOn": new Date().getTime(),
+      "status":this.status,
+      "repairDate":this.repairDate,
+      "repairTime":this.repairTime,
+      "technicianAccepted":this.technicianAccepted,
+      "technicianFinished":this.technicianFinished,
+      "technicianStatus":this.technicianStatus
+
     }
     console.log("con obj  : ",this.orderObj);
-     const url = `${this.baseUrl + "/container"}/${this.toBeEdited}`;
+    const url = `${this.baseUrl + "/container"}/${this.toBeEdited}`;
     this.http.put(url, JSON.stringify(this.orderObj), { headers: this.headers })
       .toPromise()
       .then(() => {
         this.ngOnInit();
         this.modalService.dismissAll('Cross click');
         this.openEditSuccessModal(content2);
-      }) 
+      })
   }
 
 
@@ -480,6 +487,12 @@ export class AdminComponent implements OnInit {
     this.EvesselIn = o.vesselIn
     this.EvesselOut = o.vesselOut
     this.EportOfLoading = o.portOfLoading
+    this.status=o.status
+    this.repairDate=o.repairDate
+    this.repairTime=o.repairTime
+    this.technicianAccepted=o.technicianAccepted
+    this.technicianFinished=o.technicianFinished
+    this.technicianStatus=o.technicianStatus
 
     this.modalService.open(content1, { ariaLabelledBy: 'modal-edit' }).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
