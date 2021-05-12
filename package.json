@@ -33,7 +33,7 @@
     "zone.js": "^0.8.24",
     "bootstrap": "4.1.3",
     "@ng-bootstrap/ng-bootstrap": "3.2.2",
-    "chart.js": "2.7.2",
+    "chart.js": "2.9.4",
     "ng2-charts": "1.6.0",
     "ngx-cookie-service": "1.0.10",
     "express": "4.16.3",
