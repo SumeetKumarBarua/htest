@@ -36,7 +36,7 @@
     "chart.js": "2.7.2",
     "ng2-charts": "1.6.0",
     "ngx-cookie-service": "1.0.10",
-    "express": "4.16.3",
+    "express": "4.17.3",
     "body-parser": "1.18.2",
     "jquery": "^3.2.1",
     "morgan": "^1.8.2",
